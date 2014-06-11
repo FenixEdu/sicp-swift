@@ -1,35 +1,35 @@
-;;;;LAZY EVALUATOR FROM SECTION 4.2 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// LAZY EVALUATOR FROM SECTION 4.2 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch4.scm
-;;;; Also includes enlarged primitive-procedures list
+// Matches code in ch4.scm
+//  Also includes enlarged primitive-procedures list
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;**NOTE**This file loads the metacircular evaluator of
-;;;;  sections 4.1.1-4.1.4, since it uses the expression representation,
-;;;;  environment representation, etc.
-;;;;  You may need to change the (load ...) expression to work in your
-;;;;  version of Scheme.
-;;;;**WARNING: Don't load mceval twice (or you'll lose the primitives
-;;;;  interface, due to renamings of apply).
+// This file can be loaded into Scheme as a whole.
+// **NOTE**This file loads the metacircular evaluator of
+//   sections 4.1.1-4.1.4, since it uses the expression representation,
+//   environment representation, etc.
+//   You may need to change the (load ...) expression to work in your
+//   version of Scheme.
+// **WARNING: Don't load mceval twice (or you'll lose the primitives
+//   interface, due to renamings of apply).
 
-;;;;Then you can initialize and start the evaluator by evaluating
-;;;; the two lines at the end of the file ch4-mceval.scm
-;;;; (setting up the global environment and starting the driver loop).
-
-
-;;;;  To run without memoization, reload the first version of force-it below
+// Then you can initialize and start the evaluator by evaluating
+//  the two lines at the end of the file ch4-mceval.scm
+//  (setting up the global environment and starting the driver loop).
 
 
-;;**implementation-dependent loading of evaluator file
-;;Note: It is loaded first so that the section 4.2 definition
-;; of eval overrides the definition from 4.1.1
+//   To run without memoization, reload the first version of force-it below
+
+
+// **implementation-dependent loading of evaluator file
+// Note: It is loaded first so that the section 4.2 definition
+//  of eval overrides the definition from 4.1.1
 (load "ch4-mceval.scm")
 
 
-;;;SECTION 4.2.2
+// SECTION 4.2.2
 
-;;; Modifying the evaluator
+//  Modifying the evaluator
 
 (define (eval exp env)
   (cond ((self-evaluating? exp) exp)
@@ -103,16 +103,16 @@
   (driver-loop))
 
 
-;;; Representing thunks
+//  Representing thunks
 
-;; non-memoizing version of force-it
+//  non-memoizing version of force-it
 
 (define (force-it obj)
   (if (thunk? obj)
       (actual-value (thunk-exp obj) (thunk-env obj))
       obj))
 
-;; thunks
+//  thunks
 
 (define (delay-it exp env)
   (list 'thunk exp env))
@@ -123,14 +123,14 @@
 (define (thunk-exp thunk) (cadr thunk))
 (define (thunk-env thunk) (caddr thunk))
 
-;; "thunk" that has been forced and is storing its (memoized) value
+//  "thunk" that has been forced and is storing its (memoized) value
 (define (evaluated-thunk? obj)
   (tagged-list? obj 'evaluated-thunk))
 
 (define (thunk-value evaluated-thunk) (cadr evaluated-thunk))
 
 
-;; memoizing version of force-it
+//  memoizing version of force-it
 
 (define (force-it obj)
   (cond ((thunk? obj)
@@ -146,8 +146,8 @@
         (else obj)))
 
 
-;; A longer list of primitives -- suitable for running everything in 4.2
-;; Overrides the list in ch4-mceval.scm
+//  A longer list of primitives -- suitable for running everything in 4.2
+//  Overrides the list in ch4-mceval.scm
 
 (define primitive-procedures
   (list (list 'car car)
@@ -162,7 +162,7 @@
         (list '= =)
         (list 'newline newline)
         (list 'display display)
-;;      more primitives
+//       more primitives
         ))
 
 'LAZY-EVALUATOR-LOADED

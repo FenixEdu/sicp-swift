@@ -1,42 +1,42 @@
-;;;;AMB EVALUATOR FROM SECTION 4.3 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// AMB EVALUATOR FROM SECTION 4.3 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch4.scm.
-;;;; To run the sample programs and exercises, code below also includes
-;;;; -- enlarged primitive-procedures list
-;;;; -- support for Let (as noted in footnote 56, p.428)
+// Matches code in ch4.scm.
+//  To run the sample programs and exercises, code below also includes
+//  -- enlarged primitive-procedures list
+//  -- support for Let (as noted in footnote 56, p.428)
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;**NOTE**This file loads the metacircular evaluator of
-;;;;  sections 4.1.1-4.1.4, since it uses the expression representation,
-;;;;  environment representation, etc.
-;;;;  You may need to change the (load ...) expression to work in your
-;;;;  version of Scheme.
-;;;;**WARNING: Don't load mceval twice (or you'll lose the primitives
-;;;;  interface, due to renamings of apply).
+// This file can be loaded into Scheme as a whole.
+// **NOTE**This file loads the metacircular evaluator of
+//   sections 4.1.1-4.1.4, since it uses the expression representation,
+//   environment representation, etc.
+//   You may need to change the (load ...) expression to work in your
+//   version of Scheme.
+// **WARNING: Don't load mceval twice (or you'll lose the primitives
+//   interface, due to renamings of apply).
 
-;;;;Then you can initialize and start the evaluator by evaluating
-;;;; the two lines at the end of the file ch4-mceval.scm
-;;;; (setting up the global environment and starting the driver loop).
-;;;;In the driver loop, do
-;(define (require p)
-;  (if (not p) (amb)))
+// Then you can initialize and start the evaluator by evaluating
+//  the two lines at the end of the file ch4-mceval.scm
+//  (setting up the global environment and starting the driver loop).
+// In the driver loop, do
+// (define (require p)
+// (if (not p) (amb)))
 
 
-;;**implementation-dependent loading of evaluator file
-;;Note: It is loaded first so that the section 4.2 definition
-;; of eval overrides the definition from 4.1.1
+// **implementation-dependent loading of evaluator file
+// Note: It is loaded first so that the section 4.2 definition
+//  of eval overrides the definition from 4.1.1
 (load "ch4-mceval.scm")
 
 
 
-;;;Code from SECTION 4.3.3, modified as needed to run it
+// Code from SECTION 4.3.3, modified as needed to run it
 
 (define (amb? exp) (tagged-list? exp 'amb))
 (define (amb-choices exp) (cdr exp))
 
-;; analyze from 4.1.6, with clause from 4.3.3 added
-;; and also support for Let
+//  analyze from 4.1.6, with clause from 4.3.3 added
+//  and also support for Let
 (define (analyze exp)
   (cond ((self-evaluating? exp) 
          (analyze-self-evaluating exp))
@@ -57,7 +57,7 @@
 (define (ambeval exp env succeed fail)
   ((analyze exp) env succeed fail))
 
-;;;Simple expressions
+// Simple expressions
 
 (define (analyze-self-evaluating exp)
   (lambda (env succeed fail)
@@ -80,7 +80,7 @@
       (succeed (make-procedure vars bproc env)
                fail))))
 
-;;;Conditionals and sequences
+// Conditionals and sequences
 
 (define (analyze-if exp)
   (let ((pproc (analyze (if-predicate exp)))
@@ -116,7 +116,7 @@
         (error "Empty sequence -- ANALYZE"))
     (loop (car procs) (cdr procs))))
 
-;;;Definitions and assignments
+// Definitions and assignments
 
 (define (analyze-definition exp)
   (let ((var (definition-variable exp))
@@ -145,7 +145,7 @@
                             (fail2)))))
              fail))))
 
-;;;Procedure applications
+// Procedure applications
 
 (define (analyze-application exp)
   (let ((fproc (analyze (operator exp)))
@@ -193,7 +193,7 @@
           "Unknown procedure type -- EXECUTE-APPLICATION"
           proc))))
 
-;;;amb expressions
+// amb expressions
 
 (define (analyze-amb exp)
   (let ((cprocs (map analyze (amb-choices exp))))
@@ -207,7 +207,7 @@
                              (try-next (cdr choices))))))
       (try-next cprocs))))
 
-;;;Driver loop
+// Driver loop
 
 (define input-prompt ";;; Amb-Eval input:")
 (define output-prompt ";;; Amb-Eval value:")
@@ -242,7 +242,7 @@
 
 
 
-;;; Support for Let (as noted in footnote 56, p.428)
+//  Support for Let (as noted in footnote 56, p.428)
 
 (define (let? exp) (tagged-list? exp 'let))
 (define (let-bindings exp) (cadr exp))
@@ -262,11 +262,11 @@
                      
 
 
-;; A longer list of primitives -- suitable for running everything in 4.3
-;; Overrides the list in ch4-mceval.scm
-;; Has Not to support Require; various stuff for code in text (including
-;;  support for Prime?); integer? and sqrt for exercise code;
-;;  eq? for ex. solution
+//  A longer list of primitives -- suitable for running everything in 4.3
+//  Overrides the list in ch4-mceval.scm
+//  Has Not to support Require; various stuff for code in text (including
+//   support for Prime?); integer? and sqrt for exercise code;
+//   eq? for ex. solution
 
 (define primitive-procedures
   (list (list 'car car)
@@ -288,7 +288,7 @@
         (list 'integer? integer?)
         (list 'sqrt sqrt)
         (list 'eq? eq?)
-;;      more primitives
+//       more primitives
         ))
 
 

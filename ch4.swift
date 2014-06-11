@@ -1,24 +1,24 @@
-;;;;CODE FROM CHAPTER 4 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// CODE FROM CHAPTER 4 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;**DON'T TRY TO LOAD THIS FILE INTO SCHEME**
-;;;; It contains lots of non-Scheme things, such as code to run in
-;;;;  the lazy evaluator or the amb evaluator, queries to run in the
-;;;;  query interpreter, etc.
-;;;;
-;;;; The code for the major subsystems in this chapter has been
-;;;;  extracted and organized into loadable/runnable Scheme files.
-;;;;  Those files contain runnable versions of
-;;;;  -- the basic metacircular evaluator (sections 4.1 - 4.1.4)
-;;;;  -- the analyzing version of the metacircular evaluator (section 4.1.7)
-;;;;  -- the lazy evaluator (section 4.2)
-;;;;  -- the amb (nondeterministic) evaluator (section 4.3)
-;;;;  -- the query interpreter (section 4.4)
-;;;;
-;;;; See the start of each topic for more detail about what is loadable
+// **DON'T TRY TO LOAD THIS FILE INTO SCHEME**
+//  It contains lots of non-Scheme things, such as code to run in
+//   the lazy evaluator or the amb evaluator, queries to run in the
+//   query interpreter, etc.
+// 
+//  The code for the major subsystems in this chapter has been
+//   extracted and organized into loadable/runnable Scheme files.
+//   Those files contain runnable versions of
+//   -- the basic metacircular evaluator (sections 4.1 - 4.1.4)
+//   -- the analyzing version of the metacircular evaluator (section 4.1.7)
+//   -- the lazy evaluator (section 4.2)
+//   -- the amb (nondeterministic) evaluator (section 4.3)
+//   -- the query interpreter (section 4.4)
+// 
+//  See the start of each topic for more detail about what is loadable
 
 
-;;;SECTION 4.1.1
-;;; **SEE ALSO** ch4-mceval.scm (loadable/runnable evaluator)
+// SECTION 4.1.1
+//  **SEE ALSO** ch4-mceval.scm (loadable/runnable evaluator)
 
 (define (eval exp env)
   (cond ((self-evaluating? exp) exp)
@@ -82,7 +82,7 @@
                     env)
   'ok)
 
-;;;SECTION 4.1.2
+// SECTION 4.1.2
 
 (define (self-evaluating? exp)
   (cond ((number? exp) true)
@@ -213,22 +213,22 @@
                      (expand-clauses rest))))))
 
 
-;; EXERCISE 4.5
+//  EXERCISE 4.5
 
 (cond ((assoc 'b '((a 1) (b 2))) => cadr)
       (else false))
 
 
-;; EXERCISE 4.7
+//  EXERCISE 4.7
 
 (let* ((x 3)
        (y (+ x 2))
        (z (+ x y 5)))
   (* x z))
 
-;; (eval (let*->nested-lets exp) env)
+//  (eval (let*->nested-lets exp) env)
 
-;; EXERCISE 4.8
+//  EXERCISE 4.8
 (define (fib n)
   (let fib-iter ((a 1)
                  (b 0)
@@ -239,7 +239,7 @@
 
 
 
-;;;SECTION 4.1.3
+// SECTION 4.1.3
 
 (define (true? x)
   (not (eq? x false)))
@@ -322,7 +322,7 @@
     (scan (frame-variables frame)
           (frame-values frame))))
 
-;;;SECTION 4.1.4
+// SECTION 4.1.4
 
 (define (setup-environment)
   (let ((initial-env
@@ -345,7 +345,7 @@
         (list 'cdr cdr)
         (list 'cons cons)
         (list 'null? null?)
-;;      more primitives
+//       more primitives
         ))
 
 (define (primitive-procedure-names)
@@ -402,7 +402,7 @@
 (append '(a b c) '(d e f))
 
 
-;;;SECTION 4.1.5
+// SECTION 4.1.5
 
 (define (factorial n)
   (if (= n 1)
@@ -414,7 +414,7 @@
 (eval (cons '* (list 5 5)) user-initial-environment)
 
 
-;; EXERCISE 4.15
+//  EXERCISE 4.15
 (define (run-forever) (run-forever))
 
 (define (try p)
@@ -422,7 +422,7 @@
       (run-forever)
       'halted))
 
-;;;SECTION 4.1.6
+// SECTION 4.1.6
 
 (define (f x)
   (define (even? n)
@@ -437,7 +437,7 @@
   )
 
 
-;; EXERCISE 4.19
+//  EXERCISE 4.19
 
 (let ((a 1))
   (define (f x)
@@ -446,12 +446,12 @@
     (+ a b))
   (f 10))
 
-;;Behavior of above is
-;; in MIT Scheme: --> ;Unassigned variable: a  [Alyssa]
-;; in MC-Eval:--> 16 (sequential rule)     [Ben]
-;; in MC-Eval with scanout: --> ;Unassigned variable a
+// Behavior of above is
+//  in MIT Scheme: --> ;Unassigned variable: a  [Alyssa]
+//  in MC-Eval:--> 16 (sequential rule)     [Ben]
+//  in MC-Eval with scanout: --> ;Unassigned variable a
 
-;; EXERCISE 4.20
+//  EXERCISE 4.20
 (define (f x)
   (letrec ((even?
             (lambda (n)
@@ -473,7 +473,7 @@
                 (* n (fact (- n 1)))))))
   (fact 10))
 
-;; EXERCISE 4.21
+//  EXERCISE 4.21
 
 ((lambda (n)
    ((lambda (fact)
@@ -484,7 +484,7 @@
           (* k (ft ft (- k 1)))))))
  10)
 
-;;PART B
+// PART B
 (define (f x)
   (define (even? n)
     (if (= n 0)
@@ -496,15 +496,15 @@
         (even? (- n 1))))
   (even? x))
 
-;;;SECTION 4.1.7
+// SECTION 4.1.7
 
 (define (factorial n)
   (if (= n 1)
       1
       (* (factorial (- n 1)) n)))
 
-;; *start* of analyzing evaluator
-;;; **SEE ALSO** ch4-analyzingmceval.scm (loadable/runnable evaluator)
+//  *start* of analyzing evaluator
+//  **SEE ALSO** ch4-analyzingmceval.scm (loadable/runnable evaluator)
 
 (define (eval exp env)
   ((analyze exp) env))
@@ -596,9 +596,9 @@
           "Unknown procedure type -- EXECUTE-APPLICATION"
           proc))))
 
-;; *end* of analyzing evaluator
+//  *end* of analyzing evaluator
 
-;; EXERCISE 4.23
+//  EXERCISE 4.23
 (define (analyze-sequence exps)
   (define (execute-sequence procs env)
     (cond ((null? (cdr procs)) ((car procs) env))
@@ -609,7 +609,7 @@
         (error "Empty sequence -- ANALYZE"))
     (lambda (env) (execute-sequence procs env))))
 
-;;;SECTION 4.2.1
+// SECTION 4.2.1
 
 (define (try a b)
   (if (= a 0) 1 b))
@@ -618,23 +618,23 @@
   (if condition exceptional-value usual-value))
 
 
-;; EXERCISE 4.25
+//  EXERCISE 4.25
 
 (define (factorial n)
   (unless (= n 1)
           (* n (factorial (- n 1)))
           1))
 
-;;;SECTION 4.2.2
-;;; **SEE ALSO** ch4-leval.scm (loadable/runnable evaluator)
+// SECTION 4.2.2
+//  **SEE ALSO** ch4-leval.scm (loadable/runnable evaluator)
 
-;; clause for EVAL
-;;((application? exp)
-;; (apply (actual-value (operator exp) env)
-;;        (operands exp)
-;;        env))
-;;
-;;* here is eval with that clause in it (*not* in book)
+//  clause for EVAL
+// ((application? exp)
+//  (apply (actual-value (operator exp) env)
+//         (operands exp)
+//         env))
+// 
+// * here is eval with that clause in it (*not* in book)
 (define (eval exp env)
   (cond ((self-evaluating? exp) exp)
         ((variable? exp) (lookup-variable-value exp env))
@@ -748,7 +748,7 @@
         (else obj)))
 
 
-;; EXERCISE 4.27
+//  EXERCISE 4.27
 
 (define count 0)
 
@@ -761,7 +761,7 @@ count
 w
 count
 
-;; EXERCISE 4.29
+//  EXERCISE 4.29
 
 (define (square x)
   (* x x))
@@ -769,14 +769,14 @@ count
 (square (id 10))
 count
 
-;; EXERCISE 4.30
+//  EXERCISE 4.30
 
 (define (eval-sequence exps env)
   (cond ((last-exp? exps) (eval (first-exp exps) env))
         (else (actual-value (first-exp exps) env)
               (eval-sequence (rest-exps exps) env))))
 
-;;PART A
+// PART A
 (define (for-each proc items)
   (if (null? items)
       'done
@@ -786,7 +786,7 @@ count
 (for-each (lambda (x) (newline) (display x))
           (list 57 321 88))
 
-;;PART B
+// PART B
 
 (define (p1 x)
   (set! x (cons x '(2)))
@@ -798,11 +798,11 @@ count
     x)
   (p (set! x (cons x '(2)))))
 
-;;;SECTION 4.2.3
-;;;
-;;; This code can be loaded as a whole into the lazy evaluator,
-;;;  and the examples (commented out with ;:) can then be evaluated
-;;;  individually.
+// SECTION 4.2.3
+// 
+//  This code can be loaded as a whole into the lazy evaluator,
+//   and the examples (commented out with ;:) can then be evaluated
+//   individually.
 
 (define (cons x y)
   (lambda (m) (m x y)))
@@ -835,11 +835,11 @@ count
         (else (cons (+ (car list1) (car list2))
                     (add-lists (cdr list1) (cdr list2))))))
 
-;: (define ones (cons 1 ones))
+// $> (define ones (cons 1 ones))
 
-;: (define integers (cons 1 (add-lists ones integers)))
+// $> (define integers (cons 1 (add-lists ones integers)))
 
-;: (list-ref integers 17)
+// $> (list-ref integers 17)
 
 (define (integral integrand initial-value dt)
   (define int
@@ -853,20 +853,20 @@ count
   (define dy (map f y))
   y)
 
-;: (list-ref (solve (lambda (x) x) 1 .001) 1000)
+// $> (list-ref (solve (lambda (x) x) 1 .001) 1000)
 
 
-;; EXERCISE 4.33
-;: (car '(a b c))
+//  EXERCISE 4.33
+// $> (car '(a b c))
 
 
-;;;SECTION 4.3
-;;;
-;;; The code from 4.3 (intro), 4.3.1, and 4.3.2 can be loaded into the
-;;; amb evaluator, and the examples (commented out with ;:) can then
-;;; be evaluated individually.
-;;;   NB. To run the prime-number examples, you must also define prime?
-;;; (e.g. using the definition from chapter 1)
+// SECTION 4.3
+// 
+//  The code from 4.3 (intro), 4.3.1, and 4.3.2 can be loaded into the
+//  amb evaluator, and the examples (commented out with ;:) can then
+//  be evaluated individually.
+//    NB. To run the prime-number examples, you must also define prime?
+//  (e.g. using the definition from chapter 1)
 
 (define (prime-sum-pair list1 list2)
   (let ((a (an-element-of list1))
@@ -874,12 +874,12 @@ count
     (require (prime? (+ a b)))
     (list a b)))
 
-;: (prime-sum-pair '(1 3 5 8) '(20 35 110))
+// $> (prime-sum-pair '(1 3 5 8) '(20 35 110))
 
 
-;;;SECTION 4.3.1
+// SECTION 4.3.1
 
-;: (list (amb 1 2 3) (amb 'a 'b))
+// $> (list (amb 1 2 3) (amb 'a 'b))
 
 (define (require p)
   (if (not p) (amb)))
@@ -892,18 +892,18 @@ count
   (amb n (an-integer-starting-from (+ n 1))))
 
 
-;: (prime-sum-pair '(1 3 5 8) '(20 35 110))
+// $> (prime-sum-pair '(1 3 5 8) '(20 35 110))
 
-;: try-again
+// $> try-again
 
-;: try-again
+// $> try-again
 
-;: try-again
+// $> try-again
 
-;: (prime-sum-pair '(19 27 30) '(11 36 58))
+// $> (prime-sum-pair '(19 27 30) '(11 36 58))
 
 
-;; EXERCISE 4.35
+//  EXERCISE 4.35
 
 (define (a-pythagorean-triple-between low high)
   (let ((i (an-integer-between low high)))
@@ -912,7 +912,7 @@ count
         (require (= (+ (* i i) (* j j)) (* k k)))
         (list i j k)))))
 
-;; EXERCISE 4.37
+//  EXERCISE 4.37
 
 (define (a-pythagorean-triple-between low high)
   (let ((i (an-integer-between low high))
@@ -924,7 +924,7 @@ count
           (require (integer? k))
           (list i j k))))))
 
-;;;SECTION 4.3.2 -- Logic Puzzles
+// SECTION 4.3.2 -- Logic Puzzles
 
 (define (distinct? items)
   (cond ((null? items) true)
@@ -953,13 +953,13 @@ count
           (list 'miller miller)
           (list 'smith smith))))
 
-;;;SECTION 4.3.2 -- Parsing natural language
+// SECTION 4.3.2 -- Parsing natural language
 
-;;; In this section, sample calls to parse are commented out with ;:
-;;; and the output of parses is quoted with '
-;;; Thus you can load this whole section into the amb evaluator --
-;;;  (but beware of the exercise 4.47 code, and of redefinitions
-;;;   of a procedure -- e.g. parse-noun-phrase)
+//  In this section, sample calls to parse are commented out with ;:
+//  and the output of parses is quoted with '
+//  Thus you can load this whole section into the amb evaluator --
+//   (but beware of the exercise 4.47 code, and of redefinitions
+//    of a procedure -- e.g. parse-noun-phrase)
 
 (define nouns '(noun student professor cat class))
 
@@ -967,7 +967,7 @@ count
 
 (define articles '(article the a))
 
-;; output of parse
+//  output of parse
 '(sentence (noun-phrase (article the) (noun cat))
            (verb eats))
 
@@ -997,8 +997,8 @@ count
     sent))
 
 
-;: (parse '(the cat eats))
-;; output of parse
+// $> (parse '(the cat eats))
+//  output of parse
 '(sentence (noun-phrase (article the) (noun cat)) (verb eats))
 
 (define prepositions '(prep for to in by with))
@@ -1034,9 +1034,9 @@ count
                              (parse-prepositional-phrase)))))
   (maybe-extend (parse-simple-noun-phrase)))
 
-;: (parse '(the student with the cat sleeps in the class))
+// $> (parse '(the student with the cat sleeps in the class))
 
-;; output of parse
+//  output of parse
 '(sentence
  (noun-phrase
   (simple-noun-phrase (article the) (noun student))
@@ -1049,9 +1049,9 @@ count
                (simple-noun-phrase
                 (article the) (noun class)))))
 
-;: (parse '(the professor lectures to the student with the cat))
+// $> (parse '(the professor lectures to the student with the cat))
 
-;; output of parse
+//  output of parse
 '(sentence
  (simple-noun-phrase (article the) (noun professor))
  (verb-phrase
@@ -1064,7 +1064,7 @@ count
                (simple-noun-phrase
                 (article the) (noun cat)))))
 
-;; output of parse
+//  output of parse
 '(sentence
  (simple-noun-phrase (article the) (noun professor))
  (verb-phrase
@@ -1077,7 +1077,7 @@ count
                              (simple-noun-phrase
                               (article the) (noun cat)))))))
 
-;; EXERCISE 4.47
+//  EXERCISE 4.47
 
 (define (parse-verb-phrase)
   (amb (parse-word verbs)
@@ -1086,16 +1086,16 @@ count
              (parse-prepositional-phrase))))
 
 
-;;;SECTION 4.3.3
-;;; **SEE ALSO** ch4-ambeval.scm (loadable/runnable evaluator)
+// SECTION 4.3.3
+//  **SEE ALSO** ch4-ambeval.scm (loadable/runnable evaluator)
 
 (define (amb? exp) (tagged-list? exp 'amb))
 (define (amb-choices exp) (cdr exp))
 
-;; clause for ANALYZE
-;;((amb? exp) (analyze-amb exp))
-;;
-;;* here is analyze with that clause in it (*not* in book)
+//  clause for ANALYZE
+// ((amb? exp) (analyze-amb exp))
+// 
+// * here is analyze with that clause in it (*not* in book)
 (define (analyze exp)
   (cond ((self-evaluating? exp) 
          (analyze-self-evaluating exp))
@@ -1115,7 +1115,7 @@ count
 (define (ambeval exp env succeed fail)
   ((analyze exp) env succeed fail))
 
-;;;Simple expressions
+// Simple expressions
 
 (define (analyze-self-evaluating exp)
   (lambda (env succeed fail)
@@ -1138,7 +1138,7 @@ count
       (succeed (make-procedure vars bproc env)
                fail))))
 
-;;;Conditionals and sequences
+// Conditionals and sequences
 
 (define (analyze-if exp)
   (let ((pproc (analyze (if-predicate exp)))
@@ -1169,7 +1169,7 @@ count
         (error "Empty sequence -- ANALYZE"))
     (loop (car procs) (cdr procs))))
 
-;;;Definitions and assignments
+// Definitions and assignments
 
 (define (analyze-definition exp)
   (let ((var (definition-variable exp))
@@ -1198,7 +1198,7 @@ count
                             (fail)))))
              fail))))
 
-;;;Procedure applications
+// Procedure applications
 
 (define (analyze-application exp)
   (let ((fproc (analyze (operator exp)))
@@ -1243,7 +1243,7 @@ count
           "Unknown procedure type -- EXECUTE-APPLICATION"
           proc))))
 
-;;;amb expressions
+// amb expressions
 
 (define (analyze-amb exp)
   (let ((cprocs (map analyze (amb-choices exp))))
@@ -1257,7 +1257,7 @@ count
                              (try-next (cdr choices))))))
       (try-next cprocs))))
 
-;;;Driver loop
+// Driver loop
 
 (define input-prompt ";;; Amb-Eval input:")
 (define output-prompt ";;; Amb-Eval value:")
@@ -1290,7 +1290,7 @@ count
      (display ";;; There is no current problem")
      (driver-loop))))
 
-;; EXERCISE 4.51
+//  EXERCISE 4.51
 
 (define count 0)
 
@@ -1301,7 +1301,7 @@ count
   (list x y count))
 
 
-;; EXERCISE 4.52
+//  EXERCISE 4.52
 
 (if-fail (let ((x (an-element-of '(1 3 5))))
            (require (even? x))
@@ -1314,7 +1314,7 @@ count
          'all-odd)
 
 
-;; EXERCISE 4.53
+//  EXERCISE 4.53
 
 (let ((pairs '()))
   (if-fail (let ((p (prime-sum-pair '(1 3 5 8) '(20 35 110))))
@@ -1323,12 +1323,12 @@ count
            pairs))
 
 
-;;  what about query assertions, rules, and queries?
-;;  ***a few left -- ex 4.59, 4.61, 4.63, 4.64
-;;  also append-to-form and assert!
+//   what about query assertions, rules, and queries?
+//   ***a few left -- ex 4.59, 4.61, 4.63, 4.64
+//   also append-to-form and assert!
 
 
-;;;SECTION 4.4
+// SECTION 4.4
 
 (define (append x y)
   (if (null? x)
@@ -1336,12 +1336,12 @@ count
       (cons (car x) (append (cdr x) y))))
 
 
-;;;SECTION 4.4.1
+// SECTION 4.4.1
 
-;;; data base [assertions]
-;;; **see microshaft-data-base in the file ch4-query.scm
+//  data base [assertions]
+//  **see microshaft-data-base in the file ch4-query.scm
 
-;;; Simple queries
+//  Simple queries
 
 (job ?x (computer programmer))
 
@@ -1353,7 +1353,7 @@ count
 
 (job ?x (computer . ?type))
 
-;;; Compound queries
+//  Compound queries
 
 (and (job ?person (computer programmer))
      (address ?person ?where))
@@ -1367,30 +1367,30 @@ count
 (and (salary ?person ?amount)
      (lisp-value > ?amount 30000))
 
-;;; data base [rules]
-;;; **see microshaft-data-base in the file ch4-query.scm
+//  data base [rules]
+//  **see microshaft-data-base in the file ch4-query.scm
 
-;;; queries
+//  queries
 (lives-near ?x (Bitdiddle Ben))
 
 (and (job ?x (computer programmer))
      (lives-near ?x (Bitdiddle Ben)))
 
 
-;; EXERCISE 4.59
+//  EXERCISE 4.59
 (meeting accounting (Monday 9am))
 (meeting administration (Monday 10am))
 (meeting computer (Wednesday 3pm))
 (meeting administration (Friday 1pm))
 (meeting whole-company (Wednesday 4pm))
 
-;; EXERCISE 4.60
+//  EXERCISE 4.60
 
 (lives-near ?person (Hacker Alyssa P))
 (lives-near ?person-1 ?person-2)
 
 
-;;; Logic as programs
+//  Logic as programs
 
 (rule (append-to-form () ?y ?y))
 
@@ -1404,7 +1404,7 @@ count
 (append-to-form ?x ?y (a b c d))
 
 
-;; EXERCISE 4.61
+//  EXERCISE 4.61
 
 (rule (?x next-to ?y in (?x ?y . ?u)))
 
@@ -1415,7 +1415,7 @@ count
 (?x next-to 1 in (2 1 3 1))
 
 
-;; EXERCISE 4.63
+//  EXERCISE 4.63
 
 (son Adam Cain)
 (son Cain Enoch)
@@ -1428,7 +1428,7 @@ count
 (son Ada Jubal)
 
 
-;;;SECTION 4.4.2
+// SECTION 4.4.2
 
 (job ?x (computer programmer))
 
@@ -1441,7 +1441,7 @@ count
 
 (lives-near ?x (Hacker Alyssa P))
 
-;; rule for lives-near is in ch4-query.scm
+//  rule for lives-near is in ch4-query.scm
 
 (assert! (job (Bitdiddle Ben) (computer wizard)))
 
@@ -1450,7 +1450,7 @@ count
                     (supervisor ?x ?middle-manager))))
 
 
-;;;SECTION 4.4.3
+// SECTION 4.4.3
 
 (and (job ?x (computer programmer))
      (supervisor ?x ?y))
@@ -1472,7 +1472,7 @@ count
      (supervisor ?x ?y))
 
 
-;; EXERCISE 4.64
+//  EXERCISE 4.64
 
 (rule (outranked-by ?staff-person ?boss)
       (or (supervisor ?staff-person ?boss)
@@ -1482,11 +1482,11 @@ count
 (outranked-by (Bitdiddle Ben) ?who)
 
 
-;;;SECTION 4.4.4
-;;; **SEE ALSO** ch4-query.scm (loadable/runnable query system)
+// SECTION 4.4.4
+//  **SEE ALSO** ch4-query.scm (loadable/runnable query system)
 
-;;;SECTION 4.4.4.1
-;;;The Driver Loop and Instantiation
+// SECTION 4.4.4.1
+// The Driver Loop and Instantiation
 
 (define input-prompt ";;; Query input:")
 (define output-prompt ";;; Query results:")
@@ -1526,8 +1526,8 @@ count
   (copy exp))
 
 
-;;;SECTION 4.4.4.2
-;;;The Evaluator
+// SECTION 4.4.4.2
+// The Evaluator
 
 (define (qeval query frame-stream)
   (let ((qproc (get (type query) 'qeval)))
@@ -1535,7 +1535,7 @@ count
         (qproc (contents query) frame-stream)
         (simple-query query frame-stream))))
 
-;;;Simple queries
+// Simple queries
 
 (define (simple-query query-pattern frame-stream)
   (stream-flatmap
@@ -1545,7 +1545,7 @@ count
       (delay (apply-rules query-pattern frame))))
    frame-stream))
 
-;;;Compound queries
+// Compound queries
 
 (define (conjoin conjuncts frame-stream)
   (if (empty-conjunction? conjuncts)
@@ -1567,7 +1567,7 @@ count
 
 (put 'or 'qeval disjoin)
 
-;;;Filters
+// Filters
 
 (define (negate operands frame-stream)
   (stream-flatmap
@@ -1603,8 +1603,8 @@ count
 
 (put 'always-true 'qeval always-true)
 
-;;;SECTION 4.4.4.3
-;;;Finding Assertions by Pattern Matching
+// SECTION 4.4.4.3
+// Finding Assertions by Pattern Matching
 
 (define (find-assertions pattern frame)
   (stream-flatmap (lambda (datum)
@@ -1636,8 +1636,8 @@ count
         (pattern-match (binding-value binding) dat frame)
         (extend var dat frame))))
 
-;;;SECTION 4.4.4.4
-;;;Rules and Unification
+// SECTION 4.4.4.4
+// Rules and Unification
 
 (define (apply-rules pattern frame)
   (stream-flatmap (lambda (rule)
@@ -1709,8 +1709,8 @@ count
           (else false)))
   (tree-walk exp))
 
-;;;SECTION 4.4.4.5
-;;;Maintaining the Data Base
+// SECTION 4.4.4.5
+// Maintaining the Data Base
 
 (define THE-ASSERTIONS the-empty-stream)
 
@@ -1792,7 +1792,7 @@ count
 (define (use-index? pat)
   (constant-symbol? (car pat)))
 
-;; EXERCISE 4.70
+//  EXERCISE 4.70
 (define (add-assertion! assertion)
   (store-assertion-in-index assertion)
   (set! THE-ASSERTIONS
@@ -1800,8 +1800,8 @@ count
   'ok)
 
 
-;;;SECTION 4.4.4.6
-;;;Stream operations
+// SECTION 4.4.4.6
+// Stream operations
 
 (define (stream-append-delayed s1 delayed-s2)
   (if (stream-null? s1)
@@ -1833,8 +1833,8 @@ count
   (cons-stream x the-empty-stream))
 
 
-;;;SECTION 4.4.4.7
-;;;Query syntax procedures
+// SECTION 4.4.4.7
+// Query syntax procedures
 
 (define (type exp)
   (if (pair? exp)
@@ -1918,8 +1918,8 @@ count
          (symbol->string (cadr variable))))))
 
 
-;;;SECTION 4.4.4.8
-;;;Frames and bindings
+// SECTION 4.4.4.8
+// Frames and bindings
 (define (make-binding variable value)
   (cons variable value))
 
@@ -1936,7 +1936,7 @@ count
   (cons (make-binding variable value) frame))
 
 
-;; EXERCISE 4.71
+//  EXERCISE 4.71
 (define (simple-query query-pattern frame-stream)
   (stream-flatmap
    (lambda (frame)
@@ -1952,7 +1952,7 @@ count
        (disjoin (rest-disjuncts disjuncts) frame-stream))))
 
 
-;; EXERCISE 4.73
+//  EXERCISE 4.73
 (define (flatten-stream stream)
   (if (stream-null? stream)
       the-empty-stream
@@ -1960,14 +1960,14 @@ count
        (stream-car stream)
        (flatten-stream (stream-cdr stream)))))
 
-;; EXERCISE 4.74
+//  EXERCISE 4.74
 (define (simple-stream-flatmap proc s)
   (simple-flatten (stream-map proc s)))
 (define (simple-flatten stream)
   (stream-map ??FILL-THIS-IN??
               (stream-filter ??FILL-THIS-IN?? stream)))
 
-;; EXERCISE 4.75
+//  EXERCISE 4.75
 
 (unique (job ?x (computer wizard)))
 
@@ -1978,7 +1978,7 @@ count
 (put 'unique 'qeval uniquely-asserted)
 
 
-;; EXERCISE 4.79
+//  EXERCISE 4.79
 
 (define (square x)
   (* x x))

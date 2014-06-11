@@ -1,26 +1,26 @@
-;;;;CODE FROM CHAPTER 3 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// CODE FROM CHAPTER 3 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;; Examples from the book are commented out with ;: so that they
-;;;  are easy to find and so that they will be omitted if you evaluate a
-;;;  chunk of the file (programs with intervening examples) in Scheme.
+//  Examples from the book are commented out with ;: so that they
+//   are easy to find and so that they will be omitted if you evaluate a
+//   chunk of the file (programs with intervening examples) in Scheme.
 
-;;; BEWARE: Although the whole file can be loaded into Scheme,
-;;;  you won't want to do so.  For example, you generally do
-;;;  not want to use the procedural representation of pairs
-;;;  (cons, car, cdr as defined in section 3.3.1) instead of
-;;;  Scheme's primitive pairs.
+//  BEWARE: Although the whole file can be loaded into Scheme,
+//   you won't want to do so.  For example, you generally do
+//   not want to use the procedural representation of pairs
+//   (cons, car, cdr as defined in section 3.3.1) instead of
+//   Scheme's primitive pairs.
 
-;;; Some things require code that is not in the book -- see ch3support.scm
+//  Some things require code that is not in the book -- see ch3support.scm
 
 
-;;;;SECTION 3.1
+// SECTION 3.1
 
-;;;SECTION 3.1.1
+// SECTION 3.1.1
 
-;: (withdraw 25)
-;: (withdraw 25)
-;: (withdraw 60)
-;: (withdraw 15)
+// $> (withdraw 25)
+// $> (withdraw 25)
+// $> (withdraw 60)
+// $> (withdraw 15)
 
 (define balance 100)
 
@@ -48,12 +48,12 @@
         "Insufficient funds")))
 
 
-;: (define W1 (make-withdraw 100))
-;: (define W2 (make-withdraw 100))
-;: (W1 50)
-;: (W2 70)
-;: (W2 40)
-;: (W1 40)
+// $> (define W1 (make-withdraw 100))
+// $> (define W2 (make-withdraw 100))
+// $> (W1 50)
+// $> (W2 70)
+// $> (W2 40)
+// $> (W1 40)
 
 
 (define (make-account balance)
@@ -72,38 +72,38 @@
                        m))))
   dispatch)
 
-;: (define acc (make-account 100))
+// $> (define acc (make-account 100))
 
-;: ((acc 'withdraw) 50)
-;: ((acc 'withdraw) 60)
-;: ((acc 'deposit) 40)
-;: ((acc 'withdraw) 60)
+// $> ((acc 'withdraw) 50)
+// $> ((acc 'withdraw) 60)
+// $> ((acc 'deposit) 40)
+// $> ((acc 'withdraw) 60)
 
-;: (define acc2 (make-account 100))
-
-
-;; EXERCISE 3.1
-;: (define A (make-accumulator 5))
-;: (A 10)
-;: (A 10)
+// $> (define acc2 (make-account 100))
 
 
-;; EXERCISE 3.2
-;: (define s (make-monitored sqrt))
-;: (s 100)
-;: (s 'how-many-calls?)
+//  EXERCISE 3.1
+// $> (define A (make-accumulator 5))
+// $> (A 10)
+// $> (A 10)
 
 
-;; EXERCISE 3.3
-;: (define acc (make-account 100 'secret-password))
-;: ((acc 'secret-password 'withdraw) 40)
-;: ((acc 'some-other-password 'deposit) 50)
+//  EXERCISE 3.2
+// $> (define s (make-monitored sqrt))
+// $> (s 100)
+// $> (s 'how-many-calls?)
 
 
-;;;SECTION 3.1.2
+//  EXERCISE 3.3
+// $> (define acc (make-account 100 'secret-password))
+// $> ((acc 'secret-password 'withdraw) 40)
+// $> ((acc 'some-other-password 'deposit) 50)
 
-;; *following uses rand-update -- see ch3support.scm
-;; *also must set random-init to some value
+
+// SECTION 3.1.2
+
+//  *following uses rand-update -- see ch3support.scm
+//  *also must set random-init to some value
 (define random-init 7)			;**not in book**
 (define rand
   (let ((x random-init))
@@ -128,7 +128,7 @@
            (iter (- trials-remaining 1) trials-passed))))
   (iter trials 0))
 
-;; second version (no assignment)
+//  second version (no assignment)
 (define (estimate-pi trials)
   (sqrt (/ 6 (random-gcd-test trials random-init))))
 
@@ -149,13 +149,13 @@
   (iter trials 0 initial-x))
 
 
-;; EXERCISE 3.5
+//  EXERCISE 3.5
 (define (random-in-range low high)
   (let ((range (- high low)))
     (+ low (random range))))
 
 
-;;;SECTION 3.1.3
+// SECTION 3.1.3
 
 (define (make-simplified-withdraw balance)
   (lambda (amount)
@@ -163,47 +163,47 @@
     balance))
 
 
-;: (define W (make-simplified-withdraw 25))
-;: (W 20)
-;: (W 10)
+// $> (define W (make-simplified-withdraw 25))
+// $> (W 20)
+// $> (W 10)
 
 
 (define (make-decrementer balance)
   (lambda (amount)
     (- balance amount)))
 
-;: (define D (make-decrementer 25))
-;: (D 20)
-;: (D 10)
+// $> (define D (make-decrementer 25))
+// $> (D 20)
+// $> (D 10)
 
-;: ((make-decrementer 25) 20)
-;: ((lambda (amount) (- 25 amount)) 20)
-;: (- 25 20)
+// $> ((make-decrementer 25) 20)
+// $> ((lambda (amount) (- 25 amount)) 20)
+// $> (- 25 20)
 
-;: ((make-simplified-withdraw 25) 20)
+// $> ((make-simplified-withdraw 25) 20)
 
-;: ((lambda (amount) (set! balance (- 25 amount)) 25) 20)
-;: (set! balance (- 25 20)) 25
+// $> ((lambda (amount) (set! balance (- 25 amount)) 25) 20)
+// $> (set! balance (- 25 20)) 25
 
-;;;Sameness and change
+// Sameness and change
 
-;: (define D1 (make-decrementer 25))
-;: (define D2 (make-decrementer 25))
-;: 
-;: (define W1 (make-simplified-withdraw 25))
-;: (define W2 (make-simplified-withdraw 25))
-;: 
-;: (W1 20)
-;: (W1 20)
-;: (W2 20)
+// $> (define D1 (make-decrementer 25))
+// $> (define D2 (make-decrementer 25))
+// $> 
+// $> (define W1 (make-simplified-withdraw 25))
+// $> (define W2 (make-simplified-withdraw 25))
+// $> 
+// $> (W1 20)
+// $> (W1 20)
+// $> (W2 20)
 
-;: (define peter-acc (make-account 100))
-;: (define paul-acc (make-account 100))
-;: 
-;: (define peter-acc (make-account 100))
-;: (define paul-acc peter-acc)
+// $> (define peter-acc (make-account 100))
+// $> (define paul-acc (make-account 100))
+// $> 
+// $> (define peter-acc (make-account 100))
+// $> (define paul-acc peter-acc)
 
-;;;Pitfalls of imperative programming
+// Pitfalls of imperative programming
 
 (define (factorial n)
   (define (iter product counter)
@@ -225,14 +225,14 @@
     (iter)))
 
 
-;; EXERCISE 3.7
-;: (define paul-acc
-;:   (make-joint peter-acc 'open-sesame 'rosebud))
+//  EXERCISE 3.7
+// $> (define paul-acc
+// $>   (make-joint peter-acc 'open-sesame 'rosebud))
 
 
-;;;;SECTION 3.2
+// SECTION 3.2
 
-;;;SECTION 3.2.1
+// SECTION 3.2.1
 
 (define (square x)
   (* x x))
@@ -241,7 +241,7 @@
   (lambda (x) (* x x)))
 
 
-;;;SECTION 3.2.2
+// SECTION 3.2.2
 
 (define (square x)
   (* x x))
@@ -252,10 +252,10 @@
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
 
-;: (sum-of-squares (+ a 1) (* a 2))
+// $> (sum-of-squares (+ a 1) (* a 2))
 
 
-;; EXERCISE 3.9
+//  EXERCISE 3.9
 
 (define (factorial n)
   (if (= n 1)
@@ -273,7 +273,7 @@
                  max-count)))
 
 
-;;;SECTION 3.2.3
+// SECTION 3.2.3
 
 (define (make-withdraw balance)
   (lambda (amount)
@@ -282,13 +282,13 @@
                balance)
         "Insufficient funds")))
 
-;: (define W1 (make-withdraw 100))
-;: (W1 50)
+// $> (define W1 (make-withdraw 100))
+// $> (W1 50)
 
-;: (define W2 (make-withdraw 100))
+// $> (define W2 (make-withdraw 100))
 
 
-;; EXERCISE 3.10
+//  EXERCISE 3.10
 
 (define (make-withdraw initial-amount)
   (let ((balance initial-amount))
@@ -299,14 +299,14 @@
           "Insufficient funds"))))
 
 
-;: (define W1 (make-withdraw 100))
-;: (W1 50)
-;: (define W2 (make-withdraw 100))
+// $> (define W1 (make-withdraw 100))
+// $> (W1 50)
+// $> (define W2 (make-withdraw 100))
 
 
-;;;SECTION 3.2.4
+// SECTION 3.2.4
 
-;; same as in section 1.1.8
+//  same as in section 1.1.8
 (define (sqrt x)
   (define (good-enough? guess)
     (< (abs (- (square guess) x)) 0.001))
@@ -319,7 +319,7 @@
   (sqrt-iter 1.0))
 
 
-;; EXERCISE 3.11
+//  EXERCISE 3.11
 
 (define (make-account balance)
   (define (withdraw amount)
@@ -337,17 +337,17 @@
                        m))))
   dispatch)
 
-;: (define acc (make-account 50))
-;: 
-;: ((acc 'deposit) 40)
-;: ((acc 'withdraw) 60)
-;: 
-;: (define acc2 (make-account 100))
+// $> (define acc (make-account 50))
+// $> 
+// $> ((acc 'deposit) 40)
+// $> ((acc 'withdraw) 60)
+// $> 
+// $> (define acc2 (make-account 100))
 
 
-;;;;SECTION 3.3
+// SECTION 3.3
 
-;;;SECTION 3.3.1
+// SECTION 3.3.1
 
 (define (cons x y)
   (let ((new (get-new-pair)))
@@ -356,7 +356,7 @@
     new))
 
 
-;; EXERCISE 3.12
+//  EXERCISE 3.12
 (define (append x y)
   (if (null? x)
       y
@@ -371,26 +371,26 @@
       x
       (last-pair (cdr x))))
 
-;: (define x (list 'a 'b))
-;: (define y (list 'c 'd))
-;: (define z (append  x y))
-;: z
-;: (cdr x)
-;: 
-;: (define w (append! x y))
-;: w
-;: (cdr x)
+// $> (define x (list 'a 'b))
+// $> (define y (list 'c 'd))
+// $> (define z (append  x y))
+// $> z
+// $> (cdr x)
+// $> 
+// $> (define w (append! x y))
+// $> w
+// $> (cdr x)
 
 
-;; EXERCISE 3.13
+//  EXERCISE 3.13
 (define (make-cycle x)
   (set-cdr! (last-pair x) x)
   x)
 
-;: (define z (make-cycle (list 'a 'b 'c)))
+// $> (define z (make-cycle (list 'a 'b 'c)))
 
 
-;; EXERCISE 3.14
+//  EXERCISE 3.14
 (define (mystery x)
   (define (loop x y)
     (if (null? x)
@@ -401,23 +401,23 @@
   (loop x '()))
 
 
-;;; Sharing and identity
+//  Sharing and identity
 
-;: (define x (list 'a 'b))
-;: (define z1 (cons x x))
-;: (define z2 (cons (list 'a 'b) (list 'a 'b)))
+// $> (define x (list 'a 'b))
+// $> (define z1 (cons x x))
+// $> (define z2 (cons (list 'a 'b) (list 'a 'b)))
 
 (define (set-to-wow! x)
   (set-car! (car x) 'wow)
   x)
 
-;: z1
-;: (set-to-wow! z1)
-;: z2
-;: (set-to-wow! z2)
+// $> z1
+// $> (set-to-wow! z1)
+// $> z2
+// $> (set-to-wow! z2)
 
 
-;; EXERCISE 3.16
+//  EXERCISE 3.16
 (define (count-pairs x)
   (if (not (pair? x))
       0
@@ -426,7 +426,7 @@
          1)))
 
 
-;;;Mutation as assignment
+// Mutation as assignment
 
 (define (cons x y)
   (define (dispatch m)
@@ -462,14 +462,14 @@
   z)
 
 
-;; EXERCISE 3.20
-;: (define x (cons 1 2))
-;: (define z (cons x x))
-;: (set-car! (cdr z) 17)
-;: (car x)
+//  EXERCISE 3.20
+// $> (define x (cons 1 2))
+// $> (define z (cons x x))
+// $> (set-car! (cdr z) 17)
+// $> (car x)
 
 
-;;;SECTION 3.3.2
+// SECTION 3.3.2
 
 (define (front-ptr queue) (car queue))
 (define (rear-ptr queue) (cdr queue))
@@ -503,15 +503,15 @@
          queue))) 
 
 
-;; EXERCISE 3.21
-;: (define q1 (make-queue))
-;: (insert-queue! q1 'a)
-;: (insert-queue! q1 'b)
-;: (delete-queue! q1)
-;: (delete-queue! q1)
+//  EXERCISE 3.21
+// $> (define q1 (make-queue))
+// $> (insert-queue! q1 'a)
+// $> (insert-queue! q1 'b)
+// $> (delete-queue! q1)
+// $> (delete-queue! q1)
 
 
-;;;SECTION 3.3.3
+// SECTION 3.3.3
 
 (define (lookup key table)
   (let ((record (assoc key (cdr table))))
@@ -535,7 +535,7 @@
 (define (make-table)
   (list '*table*))
 
-;; two-dimensional
+//  two-dimensional
 (define (lookup key-1 key-2 table)
   (let ((subtable (assoc key-1 (cdr table))))
     (if subtable
@@ -560,7 +560,7 @@
                         (cdr table)))))
   'ok)
 
-;; local tables
+//  local tables
 (define (make-table)
   (let ((local-table (list '*table*)))
     (define (lookup key-1 key-2)
@@ -596,7 +596,7 @@
 (define put (operation-table 'insert-proc!))
 
 
-;; EXERCISE 3.27
+//  EXERCISE 3.27
 (define (fib n)
   (cond ((= n 0) 0)
         ((= n 1) 1)
@@ -619,22 +619,22 @@
                    (else (+ (memo-fib (- n 1))
                             (memo-fib (- n 2))))))))
 
-;;;SECTION 3.3.4
+// SECTION 3.3.4
 
-;: (define a (make-wire))
-;: (define b (make-wire))
-;: (define c (make-wire))
-;: (define d (make-wire))
-;: (define e (make-wire))
-;: (define s (make-wire))
-;: 
-;: (or-gate a b d)
-;: (and-gate a b c)
-;: (inverter c e)
-;: (and-gate d e s)
+// $> (define a (make-wire))
+// $> (define b (make-wire))
+// $> (define c (make-wire))
+// $> (define d (make-wire))
+// $> (define e (make-wire))
+// $> (define s (make-wire))
+// $> 
+// $> (or-gate a b d)
+// $> (and-gate a b c)
+// $> (inverter c e)
+// $> (and-gate d e s)
 
 
-;;NB. To use half-adder, need or-gate from exercise 3.28
+// NB. To use half-adder, need or-gate from exercise 3.28
 (define (half-adder a b s c)
   (let ((d (make-wire)) (e (make-wire)))
     (or-gate a b d)
@@ -666,7 +666,7 @@
         ((= s 1) 0)
         (else (error "Invalid signal" s))))
 
-;; *following uses logical-and -- see ch3support.scm
+//  *following uses logical-and -- see ch3support.scm
 
 (define (and-gate a1 a2 output)
   (define (and-action-procedure)
@@ -736,35 +736,35 @@
                  (display "  New-value = ")
                  (display (get-signal wire)))))
 
-;;; Sample simulation
+//  Sample simulation
 
-;: (define the-agenda (make-agenda))
-;: (define inverter-delay 2)
-;: (define and-gate-delay 3)
-;: (define or-gate-delay 5)
-;: 
-;: (define input-1 (make-wire))
-;: (define input-2 (make-wire))
-;: (define sum (make-wire))
-;: (define carry (make-wire))
-;: 
-;: (probe 'sum sum)
-;: (probe 'carry carry)
-;: 
-;: (half-adder input-1 input-2 sum carry)
-;: (set-signal! input-1 1)
-;: (propagate)
-;: 
-;: (set-signal! input-2 1)
-;: (propagate)
-
-
-;; EXERCISE 3.31
-;: (define (accept-action-procedure! proc)
-;:   (set! action-procedures (cons proc action-procedures)))
+// $> (define the-agenda (make-agenda))
+// $> (define inverter-delay 2)
+// $> (define and-gate-delay 3)
+// $> (define or-gate-delay 5)
+// $> 
+// $> (define input-1 (make-wire))
+// $> (define input-2 (make-wire))
+// $> (define sum (make-wire))
+// $> (define carry (make-wire))
+// $> 
+// $> (probe 'sum sum)
+// $> (probe 'carry carry)
+// $> 
+// $> (half-adder input-1 input-2 sum carry)
+// $> (set-signal! input-1 1)
+// $> (propagate)
+// $> 
+// $> (set-signal! input-2 1)
+// $> (propagate)
 
 
-;;;Implementing agenda
+//  EXERCISE 3.31
+// $> (define (accept-action-procedure! proc)
+// $>   (set! action-procedures (cons proc action-procedures)))
+
+
+// Implementing agenda
 
 (define (make-time-segment time queue)
   (cons time queue))
@@ -827,11 +827,11 @@
         (front-queue (segment-queue first-seg)))))
 
 
-;;;SECTION 3.3.5
+// SECTION 3.3.5
 
-;: (define C (make-connector))
-;: (define F (make-connector))
-;: (celsius-fahrenheit-converter C F)
+// $> (define C (make-connector))
+// $> (define F (make-connector))
+// $> (celsius-fahrenheit-converter C F)
 
 (define (celsius-fahrenheit-converter c f)
   (let ((u (make-connector))
@@ -847,12 +847,12 @@
     (constant 32 y)
     'ok))
 
-;: (probe "Celsius temp" C)
-;: (probe "Fahrenheit temp" F)
-;: (set-value! C 25 'user)
-;: (set-value! F 212 'user)
-;: (forget-value! C 'user)
-;: (set-value! F 212 'user)
+// $> (probe "Celsius temp" C)
+// $> (probe "Fahrenheit temp" F)
+// $> (set-value! C 25 'user)
+// $> (set-value! F 212 'user)
+// $> (forget-value! C 'user)
+// $> (set-value! F 212 'user)
 
 
 (define (adder a1 a2 sum)
@@ -1015,28 +1015,28 @@
   ((connector 'connect) new-constraint))
 
 
-;; EXERCISE 3.34
+//  EXERCISE 3.34
 
 (define (squarer a b)
   (multiplier a a b))
 
 
 
-;; EXERCISE 3.36
-;: (define a (make-connector))
-;: (define b (make-connector))
-;: (set-value! a 10 'user)
+//  EXERCISE 3.36
+// $> (define a (make-connector))
+// $> (define b (make-connector))
+// $> (set-value! a 10 'user)
 
 
-;; EXERCISE 3.37
+//  EXERCISE 3.37
 
 (define (celsius-fahrenheit-converter x)
   (c+ (c* (c/ (cv 9) (cv 5))
           x)
       (cv 32)))
 
-;: (define C (make-connector))
-;: (define F (celsius-fahrenheit-converter C))
+// $> (define C (make-connector))
+// $> (define F (celsius-fahrenheit-converter C))
 
 (define (c+ x y)
   (let ((z (make-connector)))
@@ -1044,10 +1044,10 @@
     z))
 
 
-;;;SECTION 3.4
-;;;**Need parallel-execute, available for MIT Scheme
+// SECTION 3.4
+// **Need parallel-execute, available for MIT Scheme
 
-;;;SECTION 3.4.1
+// SECTION 3.4.1
 
 (define (withdraw amount)
   (if (>= balance amount)
@@ -1056,22 +1056,22 @@
       "Insufficient funds"))
 
 
-;; EXERCISE 3.38
-;: (set! balance (+ balance 10))
-;: (set! balance (- balance 20))
-;: (set! balance (- balance (/ balance 2)))
+//  EXERCISE 3.38
+// $> (set! balance (+ balance 10))
+// $> (set! balance (- balance 20))
+// $> (set! balance (- balance (/ balance 2)))
 
 
-;;;SECTION 3.4.2
+// SECTION 3.4.2
 
-;: (define x 10)
-;: (parallel-execute (lambda () (set! x (* x x)))
-;:                   (lambda () (set! x (+ x 1))))
+// $> (define x 10)
+// $> (parallel-execute (lambda () (set! x (* x x)))
+// $>                   (lambda () (set! x (+ x 1))))
 
-;: (define x 10)
-;: (define s (make-serializer))
-;: (parallel-execute (s (lambda () (set! x (* x x))))
-;:                   (s (lambda () (set! x (+ x 1)))))
+// $> (define x 10)
+// $> (define s (make-serializer))
+// $> (parallel-execute (s (lambda () (set! x (* x x))))
+// $>                   (s (lambda () (set! x (+ x 1)))))
 
 
 (define (make-account balance)
@@ -1093,28 +1093,28 @@
     dispatch))
 
 
-;; EXERCISE 3.39
+//  EXERCISE 3.39
 
-;: (define x 10)
-;: (define s (make-serializer))
-;: (parallel-execute (lambda () (set! x ((s (lambda () (* x x))))))
-;:                   (s (lambda () (set! x (+ x 1)))))
-
-
-;; EXERCISE 3.40
-
-;: (define x 10)
-;: (parallel-execute (lambda () (set! x (* x x)))
-;:                   (lambda () (set! x (* x x x))))
-;: 
-;: 
-;: (define x 10)
-;: (define s (make-serializer))
-;: (parallel-execute (s (lambda () (set! x (* x x))))
-;:                   (s (lambda () (set! x (* x x x)))))
+// $> (define x 10)
+// $> (define s (make-serializer))
+// $> (parallel-execute (lambda () (set! x ((s (lambda () (* x x))))))
+// $>                   (s (lambda () (set! x (+ x 1)))))
 
 
-;; EXERCISE 3.41
+//  EXERCISE 3.40
+
+// $> (define x 10)
+// $> (parallel-execute (lambda () (set! x (* x x)))
+// $>                   (lambda () (set! x (* x x x))))
+// $> 
+// $> 
+// $> (define x 10)
+// $> (define s (make-serializer))
+// $> (parallel-execute (s (lambda () (set! x (* x x))))
+// $>                   (s (lambda () (set! x (* x x x)))))
+
+
+//  EXERCISE 3.41
 
 (define (make-account balance)
   (define (withdraw amount)
@@ -1135,7 +1135,7 @@
                          m))))
     dispatch))
 
-;; EXERCISE 3.42
+//  EXERCISE 3.42
 
 (define (make-account balance)
   (define (withdraw amount)
@@ -1157,7 +1157,7 @@
 			   m))))
       dispatch)))
 
-;;;Multiple shared resources
+// Multiple shared resources
 
 (define (exchange account1 account2)
   (let ((difference (- (account1 'balance)
@@ -1198,14 +1198,14 @@
      account2)))
 
 
-;; EXERCISE 3.44
+//  EXERCISE 3.44
 
 (define (transfer from-account to-account amount)
   ((from-account 'withdraw) amount)
   ((to-account 'deposit) amount))
 
 
-;; EXERCISE 3.45
+//  EXERCISE 3.45
 
 (define (make-account-and-serializer balance)
   (define (withdraw amount)
@@ -1230,7 +1230,7 @@
  ((account 'deposit) amount))
 
 
-;;;Implementing serializers
+// Implementing serializers
 
 (define (make-serializer)
   (let ((mutex (make-mutex)))
@@ -1260,7 +1260,7 @@
       (begin (set-car! cell true)
              false)))
 
-;;from footnote -- MIT Scheme
+// from footnote -- MIT Scheme
 (define (test-and-set! cell)
   (without-interrupts
    (lambda ()
@@ -1269,9 +1269,9 @@
          (begin (set-car! cell true)
                 false)))))
 
-;;;SECTION 3.5
+// SECTION 3.5
 
-;;;SECTION 3.5.1
+// SECTION 3.5.1
 
 (define (sum-primes a b)
   (define (iter count accum)
@@ -1286,8 +1286,8 @@
               0
               (filter prime? (enumerate-interval a b))))
 
-;: (car (cdr (filter prime?
-;:                   (enumerate-interval 10000 1000000))))
+// $> (car (cdr (filter prime?
+// $>                   (enumerate-interval 10000 1000000))))
 
 (define (stream-ref s n)
   (if (= n 0)
@@ -1315,15 +1315,15 @@
 
 
 
-;; stream-car and stream-cdr would normally be built into
-;;  the stream implementation
-;: (define (stream-car stream) (car stream))
-;: (define (stream-cdr stream) (force (cdr stream)))
+//  stream-car and stream-cdr would normally be built into
+//   the stream implementation
+// $> (define (stream-car stream) (car stream))
+// $> (define (stream-cdr stream) (force (cdr stream)))
 
-;: (stream-car
-;:  (stream-cdr
-;:   (stream-filter prime?
-;:                  (stream-enumerate-interval 10000 1000000))))
+// $> (stream-car
+// $>  (stream-cdr
+// $>   (stream-filter prime?
+// $>                  (stream-enumerate-interval 10000 1000000))))
 
 (define (stream-enumerate-interval low high)
   (if (> low high)
@@ -1341,10 +1341,10 @@
         (else (stream-filter pred (stream-cdr stream)))))
 
 
-;; force would normally be built into
-;;  the stream implementation
-;: (define (force delayed-object)
-;:   (delayed-object))
+//  force would normally be built into
+//   the stream implementation
+// $> (define (force delayed-object)
+// $>   (delayed-object))
 
 (define (memo-proc proc)
   (let ((already-run? false) (result false))
@@ -1356,18 +1356,18 @@
           result))))
 
 
-;; EXERCISE 3.51
+//  EXERCISE 3.51
 
 (define (show x)
   (display-line x)
   x)
 
-;: (define x (stream-map show (stream-enumerate-interval 0 10)))
-;: (stream-ref x 5)
-;: (stream-ref x 7)
+// $> (define x (stream-map show (stream-enumerate-interval 0 10)))
+// $> (stream-ref x 5)
+// $> (stream-ref x 7)
 
 
-;; EXERCISE 3.52
+//  EXERCISE 3.52
 
 (define sum 0)
 
@@ -1375,16 +1375,16 @@
   (set! sum (+ x sum))
   sum)
 
-;: (define seq (stream-map accum (stream-enumerate-interval 1 20)))
-;: (define y (stream-filter even? seq))
-;: (define z (stream-filter (lambda (x) (= (remainder x 5) 0))
-;:                          seq))
+// $> (define seq (stream-map accum (stream-enumerate-interval 1 20)))
+// $> (define y (stream-filter even? seq))
+// $> (define z (stream-filter (lambda (x) (= (remainder x 5) 0))
+// $>                          seq))
 
-;: (stream-ref y 7)
-;: (display-stream z)
+// $> (stream-ref y 7)
+// $> (display-stream z)
 
 
-;;;SECTION 3.5.2
+// SECTION 3.5.2
 
 (define (integers-starting-from n)
   (cons-stream n (integers-starting-from (+ n 1))))
@@ -1397,7 +1397,7 @@
   (stream-filter (lambda (x) (not (divisible? x 7)))
                  integers))
 
-;: (stream-ref no-sevens 100)
+// $> (stream-ref no-sevens 100)
 
 (define (fibgen a b)
   (cons-stream a (fibgen b (+ a b))))
@@ -1414,10 +1414,10 @@
 
 (define primes (sieve (integers-starting-from 2)))
 
-;: (stream-ref primes 50)
+// $> (stream-ref primes 50)
 
 
-;;;Defining streams implicitly;;;Defining streams implicitly
+// Defining streams implicitly;;;Defining streams implicitly
 
 (define ones (cons-stream 1 ones))
 
@@ -1450,11 +1450,11 @@
   (iter primes))
 
 
-;; EXERCISE 3.53
-;: (define s (cons-stream 1 (add-streams s s)))
+//  EXERCISE 3.53
+// $> (define s (cons-stream 1 (add-streams s s)))
 
 
-;; EXERCISE 3.56
+//  EXERCISE 3.56
 (define (merge s1 s2)
   (cond ((stream-null? s1) s2)
         ((stream-null? s2) s1)
@@ -1471,19 +1471,19 @@
                                       (stream-cdr s2)))))))))
 
 
-;; EXERCISE 3.58
+//  EXERCISE 3.58
 (define (expand num den radix)
   (cons-stream
    (quotient (* num radix) den)
    (expand (remainder (* num radix) den) den radix)))
 
 
-;; EXERCISE 3.59
-;: (define exp-series
-;:   (cons-stream 1 (integrate-series exp-series)))
+//  EXERCISE 3.59
+// $> (define exp-series
+// $>   (cons-stream 1 (integrate-series exp-series)))
 
 
-;;;SECTION 3.5.3
+// SECTION 3.5.3
 
 (define (sqrt-improve guess x)
   (average guess (/ x guess)))
@@ -1497,17 +1497,17 @@
                              guesses)))
   guesses)
 
-;: (display-stream (sqrt-stream 2))
+// $> (display-stream (sqrt-stream 2))
 
 
 (define (pi-summands n)
   (cons-stream (/ 1.0 n)
                (stream-map - (pi-summands (+ n 2)))))
 
-;: (define pi-stream
-;:   (scale-stream (partial-sums (pi-summands 1)) 4))
+// $> (define pi-stream
+// $>   (scale-stream (partial-sums (pi-summands 1)) 4))
 
-;: (display-stream pi-stream)
+// $> (display-stream pi-stream)
 
 
 (define (euler-transform s)
@@ -1518,7 +1518,7 @@
                           (+ s0 (* -2 s1) s2)))
                  (euler-transform (stream-cdr s)))))
 
-;: (display-stream (euler-transform pi-stream))
+// $> (display-stream (euler-transform pi-stream))
 
 
 (define (make-tableau transform s)
@@ -1530,27 +1530,27 @@
   (stream-map stream-car
               (make-tableau transform s)))
 
-;: (display-stream (accelerated-sequence euler-transform
-;:                                       pi-stream))
+// $> (display-stream (accelerated-sequence euler-transform
+// $>                                       pi-stream))
 
 
-;; EXERCISE 3.63
+//  EXERCISE 3.63
 (define (sqrt-stream x)
   (cons-stream 1.0
                (stream-map (lambda (guess)
                              (sqrt-improve guess x))
                            (sqrt-stream x))))
 
-;; EXERCISE 3.64
+//  EXERCISE 3.64
 (define (sqrt x tolerance)
   (stream-limit (sqrt-stream x) tolerance))
 
 
-;;; Infinite streams of pairs
+//  Infinite streams of pairs
 
-;: (stream-filter (lambda (pair)
-;:                  (prime? (+ (car pair) (cadr pair))))
-;:                int-pairs)
+// $> (stream-filter (lambda (pair)
+// $>                  (prime? (+ (car pair) (cadr pair))))
+// $>                int-pairs)
 
 (define (stream-append s1 s2)
   (if (stream-null? s1)
@@ -1559,7 +1559,7 @@
                    (stream-append (stream-cdr s1) s2))))
 
 
-;: (pairs integers integers)
+// $> (pairs integers integers)
 
 
 (define (interleave s1 s2)
@@ -1577,7 +1577,7 @@
     (pairs (stream-cdr s) (stream-cdr t)))))
 
 
-;; EXERCISE 3.68
+//  EXERCISE 3.68
 
 (define (pairs s t)
   (interleave
@@ -1586,7 +1586,7 @@
    (pairs (stream-cdr s) (stream-cdr t))))
 
 
-;;; Streams as signals
+//  Streams as signals
 
 (define (integral integrand initial-value dt)
   (define int
@@ -1596,7 +1596,7 @@
   int)
 
 
-;; EXERCISE 3.74
+//  EXERCISE 3.74
 
 (define (make-zero-crossings input-stream last-value)
   (cons-stream
@@ -1604,11 +1604,11 @@
    (make-zero-crossings (stream-cdr input-stream)
                         (stream-car input-stream))))
 
-;: (define zero-crossings (make-zero-crossings sense-data 0))
+// $> (define zero-crossings (make-zero-crossings sense-data 0))
 
 
 
-;; EXERCISE 3.75
+//  EXERCISE 3.75
 
 (define (make-zero-crossings input-stream last-value)
   (let ((avpt (/ (+ (stream-car input-stream) last-value) 2)))
@@ -1617,7 +1617,7 @@
                                       avpt))))
 
 
-;;;SECTION 3.5.4
+// SECTION 3.5.4
 
 (define (solve f y0 dt)
   (define y (integral dy y0 dt))
@@ -1638,10 +1638,10 @@
   y)
 
 
-;: (stream-ref (solve (lambda (y) y) 1 0.001) 1000)
+// $> (stream-ref (solve (lambda (y) y) 1 0.001) 1000)
 
 
-;; EXERCISE 3.77
+//  EXERCISE 3.77
 
 (define (integral integrand initial-value dt)
   (cons-stream initial-value
@@ -1652,9 +1652,9 @@
                                 initial-value)
                              dt))))
 
-;;;SECTION 3.5.5
+// SECTION 3.5.5
 
-;; same as in section 3.1.2
+//  same as in section 3.1.2
 (define rand
   (let ((x random-init))
     (lambda ()
@@ -1667,9 +1667,9 @@
                (stream-map rand-update random-numbers)))
 
 
-;: (define cesaro-stream
-;:   (map-successive-pairs (lambda (r1 r2) (= (gcd r1 r2) 1))
-;:                         random-numbers))
+// $> (define cesaro-stream
+// $>   (map-successive-pairs (lambda (r1 r2) (= (gcd r1 r2) 1))
+// $>                         random-numbers))
 
 (define (map-successive-pairs f s)
   (cons-stream
@@ -1687,12 +1687,12 @@
       (next (+ passed 1) failed)
       (next passed (+ failed 1))))
 
-;: (define pi
-;:   (stream-map (lambda (p) (sqrt (/ 6 p)))
-;:               (monte-carlo cesaro-stream 0 0)))
+// $> (define pi
+// $>   (stream-map (lambda (p) (sqrt (/ 6 p)))
+// $>               (monte-carlo cesaro-stream 0 0)))
 
 
-;; same as in section 3.1.3
+//  same as in section 3.1.3
 (define (make-simplified-withdraw balance)
   (lambda (amount)
     (set! balance (- balance amount))

@@ -1,26 +1,26 @@
-;;;;EXPLICIT-CONTROL EVALUATOR FROM SECTION 5.4 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// EXPLICIT-CONTROL EVALUATOR FROM SECTION 5.4 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch5.scm
+// Matches code in ch5.scm
 
-;;; To use it
-;;; -- load "load-eceval.scm", which loads this file and the
-;;;    support it needs (including the register-machine simulator)
+//  To use it
+//  -- load "load-eceval.scm", which loads this file and the
+//     support it needs (including the register-machine simulator)
 
-;;; -- To initialize and start the machine, do
+//  -- To initialize and start the machine, do
 
-;: (define the-global-environment (setup-environment))
+// $> (define the-global-environment (setup-environment))
 
-;: (start eceval)
+// $> (start eceval)
 
-;; To restart, can do just
-;: (start eceval)
-;;;;;;;;;;
+//  To restart, can do just
+// $> (start eceval)
+// 
 
 
-;;**NB. To [not] monitor stack operations, comment in/[out] the line after
-;; print-result in the machine controller below
-;;**Also choose the desired make-stack version in regsim.scm
+// **NB. To [not] monitor stack operations, comment in/[out] the line after
+//  print-result in the machine controller below
+// **Also choose the desired make-stack version in regsim.scm
 
 (define eceval-operations
   (list
@@ -85,7 +85,7 @@
    '(exp env val proc argl continue unev)
    eceval-operations
   '(
-;;SECTION 5.4.4
+// SECTION 5.4.4
 read-eval-print-loop
   (perform (op initialize-stack))
   (perform
@@ -95,7 +95,7 @@ read-eval-print-loop
   (assign continue (label print-result))
   (goto (label eval-dispatch))
 print-result
-;;**following instruction optional -- if use it, need monitored stack
+// **following instruction optional -- if use it, need monitored stack
   (perform (op print-stack-statistics))
   (perform
    (op announce-output) (const ";;; EC-Eval value:"))
@@ -115,7 +115,7 @@ signal-error
   (perform (op user-print) (reg val))
   (goto (label read-eval-print-loop))
 
-;;SECTION 5.4.1
+// SECTION 5.4.1
 eval-dispatch
   (test (op self-evaluating?) (reg exp))
   (branch (label ev-self-eval))
@@ -215,7 +215,7 @@ compound-apply
   (assign unev (op procedure-body) (reg proc))
   (goto (label ev-sequence))
 
-;;;SECTION 5.4.2
+// SECTION 5.4.2
 ev-begin
   (assign unev (op begin-actions) (reg exp))
   (save continue)
@@ -238,7 +238,7 @@ ev-sequence-last-exp
   (restore continue)
   (goto (label eval-dispatch))
 
-;;;SECTION 5.4.3
+// SECTION 5.4.3
 
 ev-if
   (save exp)

@@ -1,28 +1,28 @@
-;;;;METACIRCULAR EVALUATOR THAT SEPARATES ANALYSIS FROM EXECUTION
-;;;; FROM SECTION 4.1.7 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// METACIRCULAR EVALUATOR THAT SEPARATES ANALYSIS FROM EXECUTION
+//  FROM SECTION 4.1.7 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch4.scm
+// Matches code in ch4.scm
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;**NOTE**This file loads the metacircular evaluator of
-;;;;  sections 4.1.1-4.1.4, since it uses the expression representation,
-;;;;  environment representation, etc.
-;;;;  You may need to change the (load ...) expression to work in your
-;;;;  version of Scheme.
-;;;;**WARNING: Don't load mceval twice (or you'll lose the primitives
-;;;;  interface, due to renamings of apply).
+// This file can be loaded into Scheme as a whole.
+// **NOTE**This file loads the metacircular evaluator of
+//   sections 4.1.1-4.1.4, since it uses the expression representation,
+//   environment representation, etc.
+//   You may need to change the (load ...) expression to work in your
+//   version of Scheme.
+// **WARNING: Don't load mceval twice (or you'll lose the primitives
+//   interface, due to renamings of apply).
 
-;;;;Then you can initialize and start the evaluator by evaluating
-;;;; the two lines at the end of the file ch4-mceval.scm
-;;;; (setting up the global environment and starting the driver loop).
+// Then you can initialize and start the evaluator by evaluating
+//  the two lines at the end of the file ch4-mceval.scm
+//  (setting up the global environment and starting the driver loop).
 
 
-;;**implementation-dependent loading of evaluator file
-;;Note: It is loaded first so that the section 4.1.7 definition
-;; of eval overrides the definition from 4.1.1
+// **implementation-dependent loading of evaluator file
+// Note: It is loaded first so that the section 4.1.7 definition
+//  of eval overrides the definition from 4.1.1
 (load "ch4-mceval.scm")
 
-;;;SECTION 4.1.7
+// SECTION 4.1.7
 
 (define (eval exp env)
   ((analyze exp) env))

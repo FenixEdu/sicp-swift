@@ -1,22 +1,22 @@
-;;;;SIMULATION OF ECEVAL MACHINE OPERATIONS --
-;;;;loaded by load-eceval.scm and by load-eceval-compiler.scm
+// SIMULATION OF ECEVAL MACHINE OPERATIONS --
+// loaded by load-eceval.scm and by load-eceval-compiler.scm
 
-;;;;FIRST A LOT FROM 4.1.2-4.1.4
+// FIRST A LOT FROM 4.1.2-4.1.4
 
 (load "ch5-syntax.scm");               ;section 4.1.2 syntax procedures
 
-;;;SECTION 4.1.3
-;;; operations used by compiled code and eceval except as noted
+// SECTION 4.1.3
+//  operations used by compiled code and eceval except as noted
 
 (define (true? x)
   (not (eq? x false)))
 
-;;* not used by eceval itself -- used by compiled code when that
-;; is run in the eceval machine
+// * not used by eceval itself -- used by compiled code when that
+//  is run in the eceval machine
 (define (false? x)
   (eq? x false))
 
-;;following compound-procedure operations not used by compiled code
+// following compound-procedure operations not used by compiled code
 (define (make-procedure parameters body env)
   (list 'procedure parameters body env))
 
@@ -26,7 +26,7 @@
 (define (procedure-parameters p) (cadr p))
 (define (procedure-body p) (caddr p))
 (define (procedure-environment p) (cadddr p))
-;;(end of compound procedures)
+// (end of compound procedures)
 
 
 (define (enclosing-environment env) (cdr env))
@@ -95,7 +95,7 @@
           (frame-values frame))))
 
 
-;;;SECTION 4.1.4
+// SECTION 4.1.4
 
 (define (setup-environment)
   (let ((initial-env
@@ -155,29 +155,29 @@
                      '<procedure-env>))
       (display object)))
 
-;;; Simulation of new machine operations needed by
-;;;  eceval machine (not used by compiled code)
+//  Simulation of new machine operations needed by
+//   eceval machine (not used by compiled code)
 
-;;; From section 5.4.1 footnote
+//  From section 5.4.1 footnote
 (define (empty-arglist) '())
 (define (adjoin-arg arg arglist)
   (append arglist (list arg)))
 (define (last-operand? ops)
   (null? (cdr ops)))
 
-;;; From section 5.4.2 footnote, for non-tail-recursive sequences
+//  From section 5.4.2 footnote, for non-tail-recursive sequences
 (define (no-more-exps? seq) (null? seq))
 
-;;; From section 5.4.4 footnote
+//  From section 5.4.4 footnote
 (define (get-global-environment)
   the-global-environment)
-;; will do following when ready to run, not when load this file
-;;(define the-global-environment (setup-environment))
+//  will do following when ready to run, not when load this file
+// (define the-global-environment (setup-environment))
 
 
-;;; Simulation of new machine operations needed for compiled code
-;;;  and eceval/compiler interface (not used by plain eceval machine)
-;;; From section 5.5.2 footnote
+//  Simulation of new machine operations needed for compiled code
+//   and eceval/compiler interface (not used by plain eceval machine)
+//  From section 5.5.2 footnote
 (define (make-compiled-procedure entry env)
   (list 'compiled-procedure entry env))
 (define (compiled-procedure? proc)

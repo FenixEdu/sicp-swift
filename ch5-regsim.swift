@@ -1,16 +1,16 @@
-;;;;REGISTER-MACHINE SIMULATOR FROM SECTION 5.2 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// REGISTER-MACHINE SIMULATOR FROM SECTION 5.2 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch5.scm
+// Matches code in ch5.scm
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;Then you can define and simulate machines as shown in section 5.2
+// This file can be loaded into Scheme as a whole.
+// Then you can define and simulate machines as shown in section 5.2
 
-;;;**NB** there are two versions of make-stack below.
-;;; Choose the monitored or unmonitored one by reordering them to put the
-;;;  one you want last, or by commenting one of them out.
-;;; Also, comment in/out the print-stack-statistics op in make-new-machine
-;;; To find this stack code below, look for comments with **
+// **NB** there are two versions of make-stack below.
+//  Choose the monitored or unmonitored one by reordering them to put the
+//   one you want last, or by commenting one of them out.
+//  Also, comment in/out the print-stack-statistics op in make-new-machine
+//  To find this stack code below, look for comments with **
 
 
 (define (make-machine register-names ops controller-text)
@@ -39,7 +39,7 @@
 (define (set-contents! register value)
   ((register 'set) value))
 
-;;**original (unmonitored) version from section 5.2.1
+// **original (unmonitored) version from section 5.2.1
 (define (make-stack)
   (let ((s '()))
     (define (push x)
@@ -67,7 +67,7 @@
 (define (push stack value)
   ((stack 'push) value))
 
-;;**monitored version from section 5.2.4
+// **monitored version from section 5.2.4
 (define (make-stack)
   (let ((s '())
         (number-pushes 0)
@@ -398,7 +398,7 @@
         (cadr val)
         (error "Unknown operation -- ASSEMBLE" symbol))))
 
-;; from 4.1
+//  from 4.1
 (define (tagged-list? exp tag)
   (if (pair? exp)
       (eq? (car exp) tag)

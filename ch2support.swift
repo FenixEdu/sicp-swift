@@ -1,28 +1,28 @@
-;;; CODE FROM OTHER CHAPTERS OF STRUCTURE AND INTERPRETATION OF
-;;;  COMPUTER PROGRAMS NEEDED BY CHAPTER 2
+//  CODE FROM OTHER CHAPTERS OF STRUCTURE AND INTERPRETATION OF
+//   COMPUTER PROGRAMS NEEDED BY CHAPTER 2
 
-;;;from chapter 1
+// from chapter 1
 (define (square x) (* x x))
 
-;;;from section 1.2.5, for Section 2.1.1
+// from section 1.2.5, for Section 2.1.1
 (define (gcd a b)
   (if (= b 0)
       a
       (gcd b (remainder a b))))
 
-;;;from section 1.2.2, for Section 2.2.3
+// from section 1.2.2, for Section 2.2.3
 (define (fib n)
   (cond ((= n 0) 0)
         ((= n 1) 1)
         (else (+ (fib (- n 1))
                  (fib (- n 2))))))
 
-;;; ***not in book, but needed for code before quote is introduced*** 
+//  ***not in book, but needed for code before quote is introduced*** 
 (define nil '())
 
-;;;-----------
-;;;from section 3.3.3 for section 2.4.3
-;;; to support operation/type table for data-directed dispatch
+// -----------
+// from section 3.3.3 for section 2.4.3
+//  to support operation/type table for data-directed dispatch
 
 (define (assoc key records)
   (cond ((null? records) false)
@@ -63,4 +63,4 @@
 (define get (operation-table 'lookup-proc))
 (define put (operation-table 'insert-proc!))
 
-;;;-----------
+// -----------

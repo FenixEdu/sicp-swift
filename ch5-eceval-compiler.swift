@@ -1,42 +1,42 @@
-;;;;EXPLICIT-CONTROL EVALUATOR FROM SECTION 5.4 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
-;;;; MODIFIED TO SUPPORT COMPILED CODE (AS IN SECTION 5.5.7)
+// EXPLICIT-CONTROL EVALUATOR FROM SECTION 5.4 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+//  MODIFIED TO SUPPORT COMPILED CODE (AS IN SECTION 5.5.7)
 
-;;;;Changes to basic evaluator machine are
-;;;; (1) some new eceval controller code for the driver and apply-dispatch;
-;;;; (2) some additional machine operations from;
-;;;; (3) support for compiled code to call interpreted code (exercise 5.47) --
-;;;;     (new register and 1 new instruction at start)
-;;;; (4) new startup aid start-eceval
+// Changes to basic evaluator machine are
+//  (1) some new eceval controller code for the driver and apply-dispatch;
+//  (2) some additional machine operations from;
+//  (3) support for compiled code to call interpreted code (exercise 5.47) --
+//      (new register and 1 new instruction at start)
+//  (4) new startup aid start-eceval
 
-;; Explicit-control evaluator.
-;; To use it, load "load-eceval-compiler.scm", which loads this file and the
-;;  support it needs (including the register-machine simulator)
+//  Explicit-control evaluator.
+//  To use it, load "load-eceval-compiler.scm", which loads this file and the
+//   support it needs (including the register-machine simulator)
 
-;; To start, can use compile-and-go as in section 5.5.7
-;;  or start-eceval as in the section 5.5.7 footnote.
+//  To start, can use compile-and-go as in section 5.5.7
+//   or start-eceval as in the section 5.5.7 footnote.
 
-;; To resume the machine without reinitializing the global environment
-;; if you have somehow interrupted out of the machine back to Scheme, do
+//  To resume the machine without reinitializing the global environment
+//  if you have somehow interrupted out of the machine back to Scheme, do
 
-;: (set-register-contents! eceval 'flag false)
-;: (start eceval)
+// $> (set-register-contents! eceval 'flag false)
+// $> (start eceval)
 
-;;;;;;;;
+// 
 
-;; any old value to create the variable so that
-;;  compile-and-go and/or start-eceval can set! it.
+//  any old value to create the variable so that
+//   compile-and-go and/or start-eceval can set! it.
 (define the-global-environment '())
 
-;;; Interfacing compiled code with eceval machine
-;;; From section 5.5.7
+//  Interfacing compiled code with eceval machine
+//  From section 5.5.7
 (define (start-eceval)
   (set! the-global-environment (setup-environment))
   (set-register-contents! eceval 'flag false)
   (start eceval))
 
-;; Modification of section 4.1.4 procedure
-;; **replaces version in syntax file
+//  Modification of section 4.1.4 procedure
+//  **replaces version in syntax file
 (define (user-print object)
   (cond ((compound-procedure? object)
          (display (list 'compound-procedure
@@ -57,9 +57,9 @@
     (set-register-contents! eceval 'flag true)
     (start eceval)))
 
-;;**NB. To [not] monitor stack operations, comment in/[out] the line after
-;; print-result in the machine controller below
-;;**Also choose the desired make-stack version in regsim.scm
+// **NB. To [not] monitor stack operations, comment in/[out] the line after
+//  print-result in the machine controller below
+// **Also choose the desired make-stack version in regsim.scm
 
 (define eceval-operations
   (list
@@ -137,10 +137,10 @@
 	 )
    eceval-operations
   '(
-;;SECTION 5.4.4, as modified in 5.5.7
-;;*for compiled to call interpreted (from exercise 5.47)
+// SECTION 5.4.4, as modified in 5.5.7
+// *for compiled to call interpreted (from exercise 5.47)
   (assign compapp (label compound-apply))
-;;*next instruction supports entry from compiler (from section 5.5.7)
+// *next instruction supports entry from compiler (from section 5.5.7)
   (branch (label external-entry))
 read-eval-print-loop
   (perform (op initialize-stack))
@@ -151,14 +151,14 @@ read-eval-print-loop
   (assign continue (label print-result))
   (goto (label eval-dispatch))
 print-result
-;;**following instruction optional -- if use it, need monitored stack
+// **following instruction optional -- if use it, need monitored stack
   (perform (op print-stack-statistics))
   (perform
    (op announce-output) (const ";;; EC-Eval value:"))
   (perform (op user-print) (reg val))
   (goto (label read-eval-print-loop))
 
-;;*support for entry from compiler (from section 5.5.7)
+// *support for entry from compiler (from section 5.5.7)
 external-entry
   (perform (op initialize-stack))
   (assign env (op get-global-environment))
@@ -178,7 +178,7 @@ signal-error
   (perform (op user-print) (reg val))
   (goto (label read-eval-print-loop))
 
-;;SECTION 5.4.1
+// SECTION 5.4.1
 eval-dispatch
   (test (op self-evaluating?) (reg exp))
   (branch (label ev-self-eval))
@@ -261,12 +261,12 @@ apply-dispatch
   (branch (label primitive-apply))
   (test (op compound-procedure?) (reg proc))  
   (branch (label compound-apply))
-;;*next added to call compiled code from evaluator (section 5.5.7)
+// *next added to call compiled code from evaluator (section 5.5.7)
   (test (op compiled-procedure?) (reg proc))  
   (branch (label compiled-apply))
   (goto (label unknown-procedure-type))
 
-;;*next added to call compiled code from evaluator (section 5.5.7)
+// *next added to call compiled code from evaluator (section 5.5.7)
 compiled-apply
   (restore continue)
   (assign val (op compiled-procedure-entry) (reg proc))
@@ -287,7 +287,7 @@ compound-apply
   (assign unev (op procedure-body) (reg proc))
   (goto (label ev-sequence))
 
-;;;SECTION 5.4.2
+// SECTION 5.4.2
 ev-begin
   (assign unev (op begin-actions) (reg exp))
   (save continue)
@@ -310,7 +310,7 @@ ev-sequence-last-exp
   (restore continue)
   (goto (label eval-dispatch))
 
-;;;SECTION 5.4.3
+// SECTION 5.4.3
 
 ev-if
   (save exp)

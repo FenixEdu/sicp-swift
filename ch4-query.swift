@@ -1,20 +1,20 @@
-;;;;QUERY SYSTEM FROM SECTION 4.4.4 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// QUERY SYSTEM FROM SECTION 4.4.4 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch4.scm
-;;;;Includes:
-;;;;  -- supporting code from 4.1, chapter 3, and instructor's manual
-;;;;  -- data base from Section 4.4.1 -- see microshaft-data-base below
+// Matches code in ch4.scm
+// Includes:
+//   -- supporting code from 4.1, chapter 3, and instructor's manual
+//   -- data base from Section 4.4.1 -- see microshaft-data-base below
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;In order to run the query system, the Scheme must support streams.
+// This file can be loaded into Scheme as a whole.
+// In order to run the query system, the Scheme must support streams.
 
-;;;;NB. PUT's are commented out and no top-level table is set up.
-;;;;Instead use initialize-data-base (from manual), supplied in this file.
+// NB. PUT's are commented out and no top-level table is set up.
+// Instead use initialize-data-base (from manual), supplied in this file.
 
 
-;;;SECTION 4.4.4.1
-;;;The Driver Loop and Instantiation
+// SECTION 4.4.4.1
+// The Driver Loop and Instantiation
 
 (define input-prompt ";;; Query input:")
 (define output-prompt ";;; Query results:")
@@ -54,8 +54,8 @@
   (copy exp))
 
 
-;;;SECTION 4.4.4.2
-;;;The Evaluator
+// SECTION 4.4.4.2
+// The Evaluator
 
 (define (qeval query frame-stream)
   (let ((qproc (get (type query) 'qeval)))
@@ -63,7 +63,7 @@
         (qproc (contents query) frame-stream)
         (simple-query query frame-stream))))
 
-;;;Simple queries
+// Simple queries
 
 (define (simple-query query-pattern frame-stream)
   (stream-flatmap
@@ -73,7 +73,7 @@
       (delay (apply-rules query-pattern frame))))
    frame-stream))
 
-;;;Compound queries
+// Compound queries
 
 (define (conjoin conjuncts frame-stream)
   (if (empty-conjunction? conjuncts)
@@ -82,7 +82,7 @@
                (qeval (first-conjunct conjuncts)
                       frame-stream))))
 
-;;(put 'and 'qeval conjoin)
+// (put 'and 'qeval conjoin)
 
 
 (define (disjoin disjuncts frame-stream)
@@ -93,9 +93,9 @@
        (delay (disjoin (rest-disjuncts disjuncts)
                        frame-stream)))))
 
-;;(put 'or 'qeval disjoin)
+// (put 'or 'qeval disjoin)
 
-;;;Filters
+// Filters
 
 (define (negate operands frame-stream)
   (stream-flatmap
@@ -106,7 +106,7 @@
          the-empty-stream))
    frame-stream))
 
-;;(put 'not 'qeval negate)
+// (put 'not 'qeval negate)
 
 (define (lisp-value call frame-stream)
   (stream-flatmap
@@ -121,7 +121,7 @@
          the-empty-stream))
    frame-stream))
 
-;;(put 'lisp-value 'qeval lisp-value)
+// (put 'lisp-value 'qeval lisp-value)
 
 (define (execute exp)
   (apply (eval (predicate exp) user-initial-environment)
@@ -129,10 +129,10 @@
 
 (define (always-true ignore frame-stream) frame-stream)
 
-;;(put 'always-true 'qeval always-true)
+// (put 'always-true 'qeval always-true)
 
-;;;SECTION 4.4.4.3
-;;;Finding Assertions by Pattern Matching
+// SECTION 4.4.4.3
+// Finding Assertions by Pattern Matching
 
 (define (find-assertions pattern frame)
   (stream-flatmap (lambda (datum)
@@ -164,8 +164,8 @@
         (pattern-match (binding-value binding) dat frame)
         (extend var dat frame))))
 
-;;;SECTION 4.4.4.4
-;;;Rules and Unification
+// SECTION 4.4.4.4
+// Rules and Unification
 
 (define (apply-rules pattern frame)
   (stream-flatmap (lambda (rule)
@@ -237,8 +237,8 @@
           (else false)))
   (tree-walk exp))
 
-;;;SECTION 4.4.4.5
-;;;Maintaining the Data Base
+// SECTION 4.4.4.5
+// Maintaining the Data Base
 
 (define THE-ASSERTIONS the-empty-stream)
 
@@ -320,8 +320,8 @@
 (define (use-index? pat)
   (constant-symbol? (car pat)))
 
-;;;SECTION 4.4.4.6
-;;;Stream operations
+// SECTION 4.4.4.6
+// Stream operations
 
 (define (stream-append-delayed s1 delayed-s2)
   (if (stream-null? s1)
@@ -353,8 +353,8 @@
   (cons-stream x the-empty-stream))
 
 
-;;;SECTION 4.4.4.7
-;;;Query syntax procedures
+// SECTION 4.4.4.7
+// Query syntax procedures
 
 (define (type exp)
   (if (pair? exp)
@@ -438,8 +438,8 @@
          (symbol->string (cadr variable))))))
 
 
-;;;SECTION 4.4.4.8
-;;;Frames and bindings
+// SECTION 4.4.4.8
+// Frames and bindings
 (define (make-binding variable value)
   (cons variable value))
 
@@ -457,7 +457,7 @@
   (cons (make-binding variable value) frame))
 
 
-;;;;From Section 4.1
+// From Section 4.1
 
 (define (tagged-list? exp tag)
   (if (pair? exp)
@@ -468,7 +468,7 @@
   (newline) (newline) (display string) (newline))
 
 
-;;;;Stream support from Chapter 3
+// Stream support from Chapter 3
 
 (define (stream-map proc s)
   (if (stream-null? s)
@@ -508,7 +508,7 @@
       (cons-stream (stream-car s1)
                    (interleave s2 (stream-cdr s1)))))
 
-;;;;Table support from Chapter 3, Section 3.3.3 (local tables)
+// Table support from Chapter 3, Section 3.3.3 (local tables)
 
 (define (make-table)
   (let ((local-table (list '*table*)))
@@ -540,7 +540,7 @@
             (else (error "Unknown operation -- TABLE" m))))
     dispatch))
 
-;;;; From instructor's manual
+//  From instructor's manual
 
 (define get '())
 
@@ -574,13 +574,13 @@
   (put 'always-true 'qeval always-true)
   (deal-out rules-and-assertions '() '()))
 
-;; Do following to reinit the data base from microshaft-data-base
-;;  in Scheme (not in the query driver loop)
-;; (initialize-data-base microshaft-data-base)
+//  Do following to reinit the data base from microshaft-data-base
+//   in Scheme (not in the query driver loop)
+//  (initialize-data-base microshaft-data-base)
 
 (define microshaft-data-base
   '(
-;; from section 4.4.1
+//  from section 4.4.1
 (address (Bitdiddle Ben) (Slumerville (Ridge Road) 10))
 (job (Bitdiddle Ben) (computer wizard))
 (salary (Bitdiddle Ben) 60000)

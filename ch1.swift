@@ -1,97 +1,97 @@
-;;;;CODE FROM CHAPTER 1 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// CODE FROM CHAPTER 1 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;; Examples from the book are commented out with ;: so that they
-;;;  are easy to find and so that they will be omitted if you evaluate a
-;;;  chunk of the file (programs with intervening examples) in Scheme.
+//  Examples from the book are commented out with ;: so that they
+//   are easy to find and so that they will be omitted if you evaluate a
+//   chunk of the file (programs with intervening examples) in Scheme.
 
-;;; BEWARE: Although the whole file can be loaded into Scheme,
-;;;  don't expect the programs to work if you do so.  For example,
-;;;  the redefinition of + in exercise 1.9 wreaks havoc with the
-;;;  last version of square defined here.
-
-
-;;;SECTION 1.1.1
-
-;; interpreter examples
-
-;: 486
-
-;: (+ 137 349)
-;: (- 1000 334)
-;: (* 5 99)
-;: (/ 10 5)
-;: (+ 2.7 10)
-
-;: (+ 21 35 12 7)
-;: (* 25 4 12)
-
-;: (+ (* 3 5) (- 10 6))
-
-;: (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
-
-;: (+ (* 3
-;:       (+ (* 2 4)
-;:          (+ 3 5)))
-;:    (+ (- 10 7)
-;:       6))
+//  BEWARE: Although the whole file can be loaded into Scheme,
+//   don't expect the programs to work if you do so.  For example,
+//   the redefinition of + in exercise 1.9 wreaks havoc with the
+//   last version of square defined here.
 
 
-;;;SECTION 1.1.2
+// SECTION 1.1.1
 
-;: (define size 2)
-;: size
-;: (* 5 size)
+//  interpreter examples
 
-;: (define pi 3.14159)
-;: (define radius 10)
-;: (* pi (* radius radius))
-;: (define circumference (* 2 pi radius))
-;: circumference
+// $> 486
+
+// $> (+ 137 349)
+// $> (- 1000 334)
+// $> (* 5 99)
+// $> (/ 10 5)
+// $> (+ 2.7 10)
+
+// $> (+ 21 35 12 7)
+// $> (* 25 4 12)
+
+// $> (+ (* 3 5) (- 10 6))
+
+// $> (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
+
+// $> (+ (* 3
+// $>       (+ (* 2 4)
+// $>          (+ 3 5)))
+// $>    (+ (- 10 7)
+// $>       6))
 
 
-;;;SECTION 1.1.3
+// SECTION 1.1.2
 
-;: (* (+ 2 (* 4 6))
-;:    (+ 3 5 7))
+// $> (define size 2)
+// $> size
+// $> (* 5 size)
+
+// $> (define pi 3.14159)
+// $> (define radius 10)
+// $> (* pi (* radius radius))
+// $> (define circumference (* 2 pi radius))
+// $> circumference
 
 
-;;;SECTION 1.1.4
+// SECTION 1.1.3
+
+// $> (* (+ 2 (* 4 6))
+// $>    (+ 3 5 7))
+
+
+// SECTION 1.1.4
 
 (define (square x) (* x x))
 
-;: (square 21)
-;: (square (+ 2 5))
-;: (square (square 3))
+// $> (square 21)
+// $> (square (+ 2 5))
+// $> (square (square 3))
 
 (define (sum-of-squares x y)
   (+ (square x) (square y)))
 
-;: (sum-of-squares 3 4)
+// $> (sum-of-squares 3 4)
 
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
 
-;: (f 5)
+// $> (f 5)
 
 
-;;;SECTION 1.1.5
+// SECTION 1.1.5
 
-;: (f 5)
-;: (sum-of-squares (+ 5 1) (* 5 2))
-;: (+ (square 6) (square 10))
-;: (+ (* 6 6) (* 10 10))
-;: (+ 36 100)
+// $> (f 5)
+// $> (sum-of-squares (+ 5 1) (* 5 2))
+// $> (+ (square 6) (square 10))
+// $> (+ (* 6 6) (* 10 10))
+// $> (+ 36 100)
 
-;: (f 5)
-;: (sum-of-squares (+ 5 1) (* 5 2))
-;: (+    (square (+ 5 1))      (square (* 5 2))  )
-;: (+    (* (+ 5 1) (+ 5 1))   (* (* 5 2) (* 5 2)))
-;: (+         (* 6 6)             (* 10 10))
-;: (+           36                   100)
-;:                     136
+// $> (f 5)
+// $> (sum-of-squares (+ 5 1) (* 5 2))
+// $> (+    (square (+ 5 1))      (square (* 5 2))  )
+// $> (+    (* (+ 5 1) (+ 5 1))   (* (* 5 2) (* 5 2)))
+// $> (+         (* 6 6)             (* 10 10))
+// $> (+           36                   100)
+// $>                     136
 
 
-;;;SECTION 1.1.6
+// SECTION 1.1.6
 
 (define (abs x)
   (cond ((> x 0) x)
@@ -107,7 +107,7 @@
       (- x)
       x))
 
-;: (and (> x 5) (< x 10))
+// $> (and (> x 5) (< x 10))
 
 (define (>= x y)
   (or (> x y) (= x y)))
@@ -116,45 +116,45 @@
   (not (< x y)))
 
 
-;;EXERCISE 1.1
-;: 10
+// EXERCISE 1.1
+// $> 10
 
-;: (+ 5 3 4)
+// $> (+ 5 3 4)
 
-;: (- 9 1)
+// $> (- 9 1)
 
-;: (/ 6 2)
+// $> (/ 6 2)
 
-;: (+ (* 2 4) (- 4 6))
+// $> (+ (* 2 4) (- 4 6))
 
-;: (define a 3)
+// $> (define a 3)
 
-;: (define b (+ a 1))
+// $> (define b (+ a 1))
 
-;: (+ a b (* a b))
+// $> (+ a b (* a b))
 
-;: (= a b)
+// $> (= a b)
 
-;: (if (and (> b a) (< b (* a b)))
-;:     b
-;:     a)
+// $> (if (and (> b a) (< b (* a b)))
+// $>     b
+// $>     a)
 
-;: (cond ((= a 4) 6)
-;:       ((= b 4) (+ 6 7 a))
-;:       (else 25))
+// $> (cond ((= a 4) 6)
+// $>       ((= b 4) (+ 6 7 a))
+// $>       (else 25))
 
-;: (+ 2 (if (> b a) b a))
+// $> (+ 2 (if (> b a) b a))
 
-;: (* (cond ((> a b) a)
-;: 	 ((< a b) b)
-;: 	 (else -1))
-;:    (+ a 1))
+// $> (* (cond ((> a b) a)
+// $> 	 ((< a b) b)
+// $> 	 (else -1))
+// $>    (+ a 1))
 
-;;EXERCISE 1.4
+// EXERCISE 1.4
 (define (a-plus-abs-b a b)
   ((if (> b 0) + -) a b))
 
-;;EXERCISE 1.5
+// EXERCISE 1.5
 (define (p) (p))
 
 (define (test x y)
@@ -162,10 +162,10 @@
       0
       y))
 
-;: (test 0 (p))
+// $> (test 0 (p))
 
 
-;;;SECTION 1.1.7
+// SECTION 1.1.7
 
 (define (sqrt-iter guess x)
   (if (good-enough? guess x)
@@ -186,20 +186,20 @@
   (sqrt-iter 1.0 x))
 
 
-;: (sqrt 9)
-;: (sqrt (+ 100 37))
-;: (sqrt (+ (sqrt 2) (sqrt 3)))
-;: (square (sqrt 1000))
+// $> (sqrt 9)
+// $> (sqrt (+ 100 37))
+// $> (sqrt (+ (sqrt 2) (sqrt 3)))
+// $> (square (sqrt 1000))
 
 
-;;EXERCISE 1.6
+// EXERCISE 1.6
 (define (new-if predicate then-clause else-clause)
   (cond (predicate then-clause)
         (else else-clause)))
 
-;: (new-if (= 2 3) 0 5)
+// $> (new-if (= 2 3) 0 5)
 
-;: (new-if (= 1 1) 0 5)
+// $> (new-if (= 1 1) 0 5)
 
 (define (sqrt-iter guess x)
   (new-if (good-enough? guess x)
@@ -208,7 +208,7 @@
                      x)))
 
 
-;;;SECTION 1.1.8
+// SECTION 1.1.8
 
 (define (square x) (* x x))
 
@@ -218,7 +218,7 @@
 (define (double x) (+ x x))
 
 
-;; As in 1.1.7
+//  As in 1.1.7
 (define (sqrt x)
   (sqrt-iter 1.0 x))
 
@@ -234,7 +234,7 @@
   (average guess (/ x guess)))
 
 
-;; Block-structured
+//  Block-structured
 (define (sqrt x)
   (define (good-enough? guess x)
     (< (abs (- (square guess) x)) 0.001))
@@ -246,7 +246,7 @@
         (sqrt-iter (improve guess x) x)))
   (sqrt-iter 1.0 x))
 
-;; Taking advantage of lexical scoping
+//  Taking advantage of lexical scoping
 (define (sqrt x)
   (define (good-enough? guess)
     (< (abs (- (square guess) x)) 0.001))
@@ -258,9 +258,9 @@
         (sqrt-iter (improve guess))))
   (sqrt-iter 1.0))
 
-;;;SECTION 1.2.1
+// SECTION 1.2.1
 
-;; Recursive
+//  Recursive
 
 (define (factorial n)
   (if (= n 1)
@@ -268,7 +268,7 @@
       (* n (factorial (- n 1)))))
 
 
-;; Iterative
+//  Iterative
 
 (define (factorial n)
   (fact-iter 1 1 n))
@@ -280,7 +280,7 @@
                  (+ counter 1)
                  max-count)))
 
-;; Iterative, block-structured (from footnote)
+//  Iterative, block-structured (from footnote)
 (define (factorial n)
   (define (iter product counter)
     (if (> counter n)
@@ -290,7 +290,7 @@
   (iter 1 1))
 
 
-;;EXERCISE 1.9
+// EXERCISE 1.9
 (define (+ a b)
   (if (= a 0)
       b
@@ -301,7 +301,7 @@
       b
       (+ (dec a) (inc b))))
 
-;;EXERCISE 1.10
+// EXERCISE 1.10
 (define (A x y)
   (cond ((= y 0) 0)
         ((= x 0) (* 2 y))
@@ -309,11 +309,11 @@
         (else (A (- x 1)
                  (A x (- y 1))))))
 
-;: (A 1 10)
+// $> (A 1 10)
 
-;: (A 2 4)
+// $> (A 2 4)
 
-;: (A 3 3)
+// $> (A 3 3)
 
 (define (f n) (A 0 n))
 
@@ -324,9 +324,9 @@
 (define (k n) (* 5 n n))
 
 
-;;;SECTION 1.2.2
+// SECTION 1.2.2
 
-;; Recursive
+//  Recursive
 
 (define (fib n)
   (cond ((= n 0) 0)
@@ -334,7 +334,7 @@
         (else (+ (fib (- n 1))
                  (fib (- n 2))))))
 
-;; Iterative
+//  Iterative
 
 (define (fib n)
   (fib-iter 1 0 n))
@@ -345,7 +345,7 @@
       (fib-iter (+ a b) a (- count 1))))
 
 
-;; Counting change
+//  Counting change
 
 (define (count-change amount)
   (cc amount 5))
@@ -366,12 +366,12 @@
         ((= kinds-of-coins 4) 25)
         ((= kinds-of-coins 5) 50)))
 
-;: (count-change 100)
+// $> (count-change 100)
 
 
-;;;SECTION 1.2.3
+// SECTION 1.2.3
 
-;;EXERCISE 1.15
+// EXERCISE 1.15
 (define (cube x) (* x x x))
 
 (define (p x) (- (* 3 x) (* 4 (cube x))))
@@ -382,16 +382,16 @@
        (p (sine (/ angle 3.0)))))
 
 
-;;;SECTION 1.2.4
+// SECTION 1.2.4
 
-;; Linear recursion
+//  Linear recursion
 (define (expt b n)
   (if (= n 0)
       1
       (* b (expt b (- n 1)))))
 
 
-;; Linear iteration
+//  Linear iteration
 (define (expt b n)
   (expt-iter b n 1))
 
@@ -402,7 +402,7 @@
                 (- counter 1)
                 (* b product)))) 
 
-;; Logarithmic iteration
+//  Logarithmic iteration
 (define (fast-expt b n)
   (cond ((= n 0) 1)
         ((even? n) (square (fast-expt b (/ n 2))))
@@ -412,13 +412,13 @@
   (= (remainder n 2) 0))
 
 
-;;EXERCISE 1.17
+// EXERCISE 1.17
 (define (* a b)
   (if (= b 0)
       0
       (+ a (* a (- b 1)))))
 
-;;EXERCISE 1.19
+// EXERCISE 1.19
 (define (fib n)
   (fib-iter 1 0 0 1 n))
 
@@ -437,7 +437,7 @@
                         (- count 1)))))
 
 
-;;;SECTION 1.2.5
+// SECTION 1.2.5
 
 (define (gcd a b)
   (if (= b 0)
@@ -445,9 +445,9 @@
       (gcd b (remainder a b))))
 
 
-;;;SECTION 1.2.6
+// SECTION 1.2.6
 
-;; prime?
+//  prime?
 
 (define (smallest-divisor n)
   (find-divisor n 2))
@@ -464,7 +464,7 @@
   (= n (smallest-divisor n)))
 
 
-;; fast-prime?
+//  fast-prime?
 
 (define (expmod base exp m)
   (cond ((= exp 0) 1)
@@ -486,7 +486,7 @@
         (else false)))
 
 
-;;EXERCISE 1.22
+// EXERCISE 1.22
 (define (timed-prime-test n)
   (newline)
   (display n)
@@ -500,11 +500,11 @@
   (display " *** ")
   (display elapsed-time))
 
-;;EXERCISE 1.25
+// EXERCISE 1.25
 (define (expmod base exp m)
   (remainder (fast-expt base exp) m))
 
-;;EXERCISE 1.26
+// EXERCISE 1.26
 (define (expmod base exp m)
   (cond ((= exp 0) 1)
         ((even? exp)
@@ -515,11 +515,11 @@
          (remainder (* base (expmod base (- exp 1) m))
                     m))))
 
-;;;SECTION 1.3
+// SECTION 1.3
 
 (define (cube x) (* x x x))
 
-;;;SECTION 1.3.1
+// SECTION 1.3.1
 
 (define (sum-integers a b)
   (if (> a b)
@@ -543,14 +543,14 @@
          (sum term (next a) next b))))
 
 
-;; Using sum
+//  Using sum
 
 (define (inc n) (+ n 1))
 
 (define (sum-cubes a b)
   (sum cube a inc b))
 
-;: (sum-cubes 1 10)
+// $> (sum-cubes 1 10)
 
 
 (define (identity x) x)
@@ -558,7 +558,7 @@
 (define (sum-integers a b)
   (sum identity a inc b))
 
-;: (sum-integers 1 10)
+// $> (sum-integers 1 10)
 
 
 (define (pi-sum a b)
@@ -568,7 +568,7 @@
     (+ x 4))
   (sum pi-term a pi-next b))
 
-;: (* 8 (pi-sum 1 1000))
+// $> (* 8 (pi-sum 1 1000))
 
 
 (define (integral f a b dx)
@@ -576,15 +576,15 @@
   (* (sum f (+ a (/ dx 2)) add-dx b)
      dx))
 
-;: (integral cube 0 1 0.01)
+// $> (integral cube 0 1 0.01)
 
-;: (integral cube 0 1 0.001)
+// $> (integral cube 0 1 0.001)
 
 
-;;EXERCISE 1.32
-;: (accumulate combiner null-value term a next b)
+// EXERCISE 1.32
+// $> (accumulate combiner null-value term a next b)
 
-;;;SECTION 1.3.2
+// SECTION 1.3.2
 
 (define (pi-sum a b)
   (sum (lambda (x) (/ 1.0 (* x (+ x 2))))
@@ -603,10 +603,10 @@
 
 (define plus4 (lambda (x) (+ x 4)))
 
-;: ((lambda (x y z) (+ x y (square z))) 1 2 3)
+// $> ((lambda (x y z) (+ x y (square z))) 1 2 3)
 
 
-;; Using let
+//  Using let
 
 (define (f x y)
   (define (f-helper a b)
@@ -631,13 +631,13 @@
        (* y b)
        (* a b))))
 
-;: (+ (let ((x 3))
-;:      (+ x (* x 10)))
-;:    x)
+// $> (+ (let ((x 3))
+// $>      (+ x (* x 10)))
+// $>    x)
 
-;: (let ((x 3)
-;:       (y (+ x 2)))
-;:   (* x y))
+// $> (let ((x 3)
+// $>       (y (+ x 2)))
+// $>   (* x y))
 
 (define (f x y)
   (define a (+ 1 (* x y)))
@@ -647,18 +647,18 @@
      (* a b)))
 
 
-;;EXERCISE 1.34
+// EXERCISE 1.34
 (define (f g)
   (g 2))
 
-;: (f square)
+// $> (f square)
 
-;: (f (lambda (z) (* z (+ z 1))))
+// $> (f (lambda (z) (* z (+ z 1))))
 
 
-;;;SECTION 1.3.3
+// SECTION 1.3.3
 
-;; Half-interval method
+//  Half-interval method
 
 (define (search f neg-point pos-point)
   (let ((midpoint (average neg-point pos-point)))
@@ -685,14 +685,14 @@
            (error "Values are not of opposite sign" a b)))))
 
 
-;: (half-interval-method sin 2.0 4.0)
+// $> (half-interval-method sin 2.0 4.0)
 
-;: (half-interval-method (lambda (x) (- (* x x x) (* 2 x) 3))
-;:                       1.0
-;:                       2.0)
+// $> (half-interval-method (lambda (x) (- (* x x x) (* 2 x) 3))
+// $>                       1.0
+// $>                       2.0)
 
 
-;; Fixed points
+//  Fixed points
 
 (define tolerance 0.00001)
 
@@ -707,10 +707,10 @@
   (try first-guess))
 
 
-;: (fixed-point cos 1.0)
+// $> (fixed-point cos 1.0)
 
-;: (fixed-point (lambda (y) (+ (sin y) (cos y)))
-;:              1.0)
+// $> (fixed-point (lambda (y) (+ (sin y) (cos y)))
+// $>              1.0)
 
 
 (define (sqrt x)
@@ -722,18 +722,18 @@
                1.0))
 
 
-;;EXERCISE 1.37
-;: (cont-frac (lambda (i) 1.0)
-;:            (lambda (i) 1.0)
-;:            k)
+// EXERCISE 1.37
+// $> (cont-frac (lambda (i) 1.0)
+// $>            (lambda (i) 1.0)
+// $>            k)
 
 
-;;;SECTION 1.3.4
+// SECTION 1.3.4
 
 (define (average-damp f)
   (lambda (x) (average x (f x))))
 
-;: ((average-damp square) 10)
+// $> ((average-damp square) 10)
 
 (define (sqrt x)
   (fixed-point (average-damp (lambda (y) (/ x y)))
@@ -744,7 +744,7 @@
                1.0))
 
 
-;; Newton's method
+//  Newton's method
 
 (define (deriv g)
   (lambda (x)
@@ -755,7 +755,7 @@
 
 (define (cube x) (* x x x))
 
-;: ((deriv cube) 5)
+// $> ((deriv cube) 5)
 
 (define (newton-transform g)
   (lambda (x)
@@ -770,7 +770,7 @@
                   1.0))
 
 
-;; Fixed point of transformed function
+//  Fixed point of transformed function
 
 (define (fixed-point-of-transform g transform guess)
   (fixed-point (transform g) guess))
@@ -786,18 +786,18 @@
                             1.0))
 
 
-;;EXERCISE 1.40
-;: (newtons-method (cubic a b c) 1)
+// EXERCISE 1.40
+// $> (newtons-method (cubic a b c) 1)
 
 
-;;EXERCISE 1.41
-;: (((double (double double)) inc) 5)
+// EXERCISE 1.41
+// $> (((double (double double)) inc) 5)
 
 
-;;EXERCISE 1.42
-;: ((compose square inc) 6)
+// EXERCISE 1.42
+// $> ((compose square inc) 6)
 
 
-;;EXERCISE 1.43
-;: ((repeated square 2) 5)
+// EXERCISE 1.43
+// $> ((repeated square 2) 5)
 

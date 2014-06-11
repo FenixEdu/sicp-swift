@@ -1,7 +1,7 @@
-;;;;SCHEME SYNTAX FROM SECTION 4.1.2 OF STRUCTURE AND INTERPRETATION OF
-;;;  COMPUTER PROGRAMS, TO SUPPORT CHAPTER 5
-;;;;Loaded by compiler.scm (for use by compiler), and by eceval-support.scm
-;;;; (for simulation of eceval machine operations)
+// SCHEME SYNTAX FROM SECTION 4.1.2 OF STRUCTURE AND INTERPRETATION OF
+//   COMPUTER PROGRAMS, TO SUPPORT CHAPTER 5
+// Loaded by compiler.scm (for use by compiler), and by eceval-support.scm
+//  (for simulation of eceval machine operations)
 
 (define (self-evaluating? exp)
   (cond ((number? exp) true)
@@ -79,10 +79,10 @@
 (define (first-operand ops) (car ops))
 (define (rest-operands ops) (cdr ops))
 
-;;;**following needed only to implement COND as derived expression,
-;;; not needed by eceval machine in text.  But used by compiler
+// **following needed only to implement COND as derived expression,
+//  not needed by eceval machine in text.  But used by compiler
 
-;; from 4.1.2
+//  from 4.1.2
 (define (make-if predicate consequent alternative)
   (list 'if predicate consequent alternative))
 
@@ -117,4 +117,4 @@
             (make-if (cond-predicate first)
                      (sequence->exp (cond-actions first))
                      (expand-clauses rest))))))
-;; end of Cond support
+//  end of Cond support

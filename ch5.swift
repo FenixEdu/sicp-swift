@@ -1,28 +1,28 @@
-;;;;CODE FROM CHAPTER 5 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// CODE FROM CHAPTER 5 OF STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;**DON'T TRY TO LOAD THIS FILE INTO SCHEME**
-;;;; It contains lots of non-Scheme things, such as machine controllers
-;;;;  in section 5.1, garbage-collection and explicit-control evaluator
-;;;;  controller code in sections 5.3 and 5.4
-;;;;
-;;;; The code for the major subsystems in this chapter has been
-;;;;  extracted and organized into loadable/runnable Scheme files.
-;;;;  Those files contain runnable versions of
-;;;;  -- the register machine simulator (section 5.2)
-;;;;  -- the explicit-control evaluator (section 5.4)
-;;;;  -- the compiler (section 5.5)
-;;;;  -- the explicit-control evaluator (section 5.4) augmented to
-;;;;     interface with the compiler (section 5.5.7)
+// **DON'T TRY TO LOAD THIS FILE INTO SCHEME**
+//  It contains lots of non-Scheme things, such as machine controllers
+//   in section 5.1, garbage-collection and explicit-control evaluator
+//   controller code in sections 5.3 and 5.4
+// 
+//  The code for the major subsystems in this chapter has been
+//   extracted and organized into loadable/runnable Scheme files.
+//   Those files contain runnable versions of
+//   -- the register machine simulator (section 5.2)
+//   -- the explicit-control evaluator (section 5.4)
+//   -- the compiler (section 5.5)
+//   -- the explicit-control evaluator (section 5.4) augmented to
+//      interface with the compiler (section 5.5.7)
 
 
-;;;SECTION 5.1
+// SECTION 5.1
 
 (define (gcd a b)
   (if (= b 0)
       a
       (gcd b (remainder a b))))
 
-;;EXERCISE 5.1
+// EXERCISE 5.1
 (define (factorial n)
   (define (iter product counter)
     (if (> counter n)
@@ -32,7 +32,7 @@
   (iter 1 1))
 
 
-;;;SECTION 5.1.1
+// SECTION 5.1.1
 
 (controller
  test-b
@@ -45,8 +45,8 @@
  gcd-done)
 
 
-;;FIGURE 5.4
-;; (appears physically in 5.1.2, but logically is in 5.1.1)
+// FIGURE 5.4
+//  (appears physically in 5.1.2, but logically is in 5.1.1)
  (controller
   gcd-loop
     (assign a (op read))
@@ -63,7 +63,7 @@
     (goto (label gcd-loop)))
 
 
-;;;SECTION 5.1.2
+// SECTION 5.1.2
 
 (define (remainder n d)
   (if (< n d)
@@ -71,7 +71,7 @@
       (remainder (- n d) d)))
 
 
-;;FIGURE 5.6
+// FIGURE 5.6
 
 (controller
  test-b
@@ -90,7 +90,7 @@
  gcd-done)
 
 
-;;EXERCISE 5.3
+// EXERCISE 5.3
 (define (sqrt x)
   (define (good-enough? guess)
     (< (abs (- (square guess) x)) 0.001))
@@ -103,7 +103,7 @@
   (sqrt-iter 1.0))
 
 
-;;;SECTION 5.1.4
+// SECTION 5.1.4
 
 (define (factorial n)
   (if (= n 1)
@@ -115,7 +115,7 @@
       a
       (gcd b (remainder a b))))
 
-;;FIGURE 5.11
+// FIGURE 5.11
 (controller
    (assign continue (label fact-done))     ; set up final return address
  fact-loop
@@ -140,14 +140,14 @@
  fact-done)
 
 
-;; A double recursion
+//  A double recursion
 
 (define (fib n)
   (if (< n 2)
       n
       (+ (fib (- n 1)) (fib (- n 2)))))
 
-;;FIGURE 5.12
+// FIGURE 5.12
 (controller
    (assign continue (label fib-done))
  fib-loop
@@ -181,7 +181,7 @@
  fib-done)
 
 
-;;EXERCISE 5.4
+// EXERCISE 5.4
 
 (define (expt b n)
   (if (= n 0)
@@ -195,8 +195,8 @@
         (expt-iter (- counter 1) (* b product))))
   (expt-iter n 1))
 
-;;;SECTION 5.2
-;;; **SEE ALSO** ch5-regsim.scm (loadable/runnable simulator)
+// SECTION 5.2
+//  **SEE ALSO** ch5-regsim.scm (loadable/runnable simulator)
 
 (define gcd-machine
   (make-machine
@@ -220,7 +220,7 @@
 (get-register-contents gcd-machine 'a)
 
 
-;;;SECTION 5.2.1
+// SECTION 5.2.1
 
 (define (make-machine register-names ops controller-text)
   (let ((machine (make-new-machine)))
@@ -232,7 +232,7 @@
      (assemble controller-text machine))
     machine))
 
-;;;Registers
+// Registers
 
 (define (make-register name)
   (let ((contents '*unassigned*))
@@ -251,7 +251,7 @@
   ((register 'set) value))
 
 
-;;;Stack
+// Stack
 
 (define (make-stack)
   (let ((s '()))
@@ -281,9 +281,9 @@
   ((stack 'push) value))
 
 
-;;;Basic machine
+// Basic machine
 
-;;FIGURE 5.13
+// FIGURE 5.13
 
 (define (make-new-machine)
   (let ((pc (make-register 'pc))
@@ -344,7 +344,7 @@
   ((machine 'get-register) reg-name))
 
 
-;;;SECTION 5.2.2
+// SECTION 5.2.2
 
 (define (assemble controller-text machine)
   (extract-labels controller-text
@@ -367,7 +367,7 @@
                               insts)
                         labels)))))))
 
-;; FOOTNOTE
+//  FOOTNOTE
 (define (extract-labels text)
   (if (null? text)
       (cons '() '())
@@ -386,7 +386,7 @@
       (update-insts! insts labels machine)
       insts)))
 
-;; END FOOTNOTE
+//  END FOOTNOTE
 
 (define (update-insts! insts labels machine)
   (let ((pc (get-register machine 'pc))
@@ -424,7 +424,7 @@
         (error "Undefined label -- ASSEMBLE" label-name))))
 
 
-;;EXERCISE 5.8
+// EXERCISE 5.8
 start
   (goto (label here))
 here
@@ -436,7 +436,7 @@ here
 there
 
 
-;;;SECTION 5.2.3
+// SECTION 5.2.3
 
 (define (make-execution-procedure inst labels machine
                                   pc flag stack ops)
@@ -613,7 +613,7 @@ there
         (error "Unknown operation -- ASSEMBLE" symbol))))
 
 
-;;;SECTION 5.2.4
+// SECTION 5.2.4
 
 (list (list 'initialize-stack
             (lambda () (stack 'initialize)))
@@ -657,17 +657,17 @@ there
              (error "Unknown request -- STACK" message))))
     dispatch))
 
-;;;SECTION 5.3
+// SECTION 5.3
 
-;;;SECTION 5.3.1
+// SECTION 5.3.1
 
-;;EXERCISE 5.20
+// EXERCISE 5.20
 
 (define x (cons 1 2))
 (define y (list x x))
 
 
-;;EXERCISE 5.21
+// EXERCISE 5.21
 
 (define (count-leaves tree)
   (cond ((null? tree) 0)
@@ -683,7 +683,7 @@ there
                             (count-iter (car tree) n)))))
   (count-iter tree 0))
 
-;;;SECTION 5.3.2
+// SECTION 5.3.2
 
 (accumulate + 0 (filter odd? (enumerate-interval 0 n)))
 
@@ -754,9 +754,9 @@ gc-flip
   (assign the-cars (reg new-cars))
   (assign new-cars (reg temp))
 
-;;;SECTION 5.4
+// SECTION 5.4
 
-;;;SECTION 5.4.1
+// SECTION 5.4.1
 
 eval-dispatch
   (test (op self-evaluating?) (reg exp))
@@ -805,7 +805,7 @@ ev-application
   (goto (label eval-dispatch))
 
 
-;; footnote
+//  footnote
 (define (empty-arglist) '())
 (define (adjoin-arg arg arglist)
   (append arglist (list arg)))
@@ -871,7 +871,7 @@ compound-apply
   (goto (label ev-sequence))
 
 
-;;;SECTION 5.4.2
+// SECTION 5.4.2
 
 ev-begin
   (assign unev (op begin-actions) (reg exp))
@@ -902,12 +902,12 @@ ev-sequence-last-exp
       (sqrt-iter (improve guess x)
                  x)))
 
-;; footnote
-;;for non-tail-recursive sequences
+//  footnote
+// for non-tail-recursive sequences
 (define (no-more-exps? seq) (null? seq))
 
 
-;; non-tail-recursive version
+//  non-tail-recursive version
 ev-sequence
   (test (op no-more-exps?) (reg unev))
   (branch (label ev-sequence-end))
@@ -932,7 +932,7 @@ ev-sequence-end
   (count (+ n 1)))
 
 
-;;;SECTION 5.4.3
+// SECTION 5.4.3
 
 ev-if
   (save exp)                    ; save expression for later
@@ -991,9 +991,9 @@ ev-definition-1
   (goto (reg continue))
 
 
-;;;SECTION 5.4.4
+// SECTION 5.4.4
 
-;;footnote
+// footnote
 (define the-global-environment (setup-environment))
 (define (get-global-environment)
   the-global-environment)
@@ -1063,7 +1063,7 @@ print-result
 (factorial 5)
 
 
-;;EXERCISE 5.26
+// EXERCISE 5.26
 (define (factorial n)
   (define (iter product counter)
     (if (> counter n)
@@ -1073,22 +1073,22 @@ print-result
   (iter 1 1))
 
 
-;;EXERCISE 5.27
+// EXERCISE 5.27
 (define (factorial n)
   (if (= n 1)
       1
       (* (factorial (- n 1)) n)))
 
-;;EXERCISE 5.29
+// EXERCISE 5.29
 (define (fib n)
   (if (< n 2)
       n
       (+ (fib (- n 1)) (fib (- n 2)))))
 
-;;;SECTION 5.5
-;;; **SEE ALSO** ch5-compiler.scm (loadable/runnable compiler)
+// SECTION 5.5
+//  **SEE ALSO** ch5-compiler.scm (loadable/runnable compiler)
 
-;;;SECTION 5.5.1
+// SECTION 5.5.1
 
 (define (compile exp target linkage)
   (cond ((self-evaluating? exp)
@@ -1120,7 +1120,7 @@ print-result
   (make-instruction-sequence '() '() '()))
 
 
-;;EXERCISE 5.31 
+// EXERCISE 5.31 
 
 (f 'x 'y)
 ((f) 'x 'y)
@@ -1128,13 +1128,13 @@ print-result
 (f (g 'x) 'y)
 
 
-;;;SECTION 5.5.2
+// SECTION 5.5.2
 
-;; footnote
+//  footnote
 `((goto (label ,linkage)))
 `(1 2 ,(car x))
 
-;;;linkage code
+// linkage code
 
 (define (compile-linkage linkage)
   (cond ((eq? linkage 'return)
@@ -1152,7 +1152,7 @@ print-result
    (compile-linkage linkage)))
 
 
-;;;simple expressions
+// simple expressions
 
 (define (compile-self-evaluating exp target linkage)
   (end-with-linkage linkage
@@ -1200,9 +1200,9 @@ print-result
                   (reg env))
          (assign ,target (const ok))))))))
 
-;;;conditional expressions
+// conditional expressions
 
-;;;labels (from footnote)
+// labels (from footnote)
 (define label-counter 0)
 
 (define (new-label-number)
@@ -1213,7 +1213,7 @@ print-result
   (string->symbol
     (string-append (symbol->string name)
                    (number->string (new-label-number)))))
-;; end of footnote
+//  end of footnote
 
 (define (compile-if exp target linkage)
   (let ((t-branch (make-label 'true-branch))
@@ -1238,7 +1238,7 @@ print-result
            (append-instruction-sequences f-branch a-code))
           after-if))))))
 
-;;; sequences
+//  sequences
 
 (define (compile-sequence seq target linkage)
   (if (last-exp? seq)
@@ -1248,7 +1248,7 @@ print-result
        (compile-sequence (rest-exps seq) target linkage))))
 
 
-;; footnote
+//  footnote
 (define (make-compiled-procedure entry env)
   (list 'compiled-procedure entry env))
 
@@ -1258,9 +1258,9 @@ print-result
 (define (compiled-procedure-entry c-proc) (cadr c-proc))
 
 (define (compiled-procedure-env c-proc) (caddr c-proc))
-;; end of footnote
+//  end of footnote
 
-;;;lambda expressions
+// lambda expressions
 
 (define (compile-lambda exp target linkage)
   (let ((proc-entry (make-label 'entry))
@@ -1292,9 +1292,9 @@ print-result
      (compile-sequence (lambda-body exp) 'val 'return))))
 
 
-;;;SECTION 5.5.3
+// SECTION 5.5.3
 
-;;;combinations
+// combinations
 
 (define (compile-application exp target linkage)
   (let ((proc-code (compile (operator exp) 'proc 'next))
@@ -1337,7 +1337,7 @@ print-result
          code-for-next-arg
          (code-to-get-rest-args (cdr operand-codes))))))
 
-;;;applying procedures
+// applying procedures
 
 (define (compile-procedure-call target linkage)
   (let ((primitive-branch (make-label 'primitive-branch))
@@ -1364,7 +1364,7 @@ print-result
                      (reg argl)))))))
        after-call))))
 
-;;;applying compiled procedures
+// applying compiled procedures
 
 (define (compile-proc-appl target linkage)
   (cond ((and (eq? target 'val) (not (eq? linkage 'return)))
@@ -1393,11 +1393,11 @@ print-result
          (error "return linkage, target not val -- COMPILE"
                 target))))
 
-;; footnote
+//  footnote
 (define all-regs '(env proc val argl continue))
 
 
-;;;SECTION 5.5.4
+// SECTION 5.5.4
 
 (define (registers-needed s)
   (if (symbol? s) '() (car s)))
@@ -1475,7 +1475,7 @@ print-result
    (append (statements seq1) (statements seq2))))
 
 
-;;;SECTION 5.5.5
+// SECTION 5.5.5
 
 (compile
  '(define (factorial n)
@@ -1486,13 +1486,13 @@ print-result
  'next)
 
 
-;;EXERCISE 5.33
+// EXERCISE 5.33
 (define (factorial-alt n)
   (if (= n 1)
       1
       (* n (factorial-alt (- n 1)))))
 
-;;EXERCISE 5.34
+// EXERCISE 5.34
 (define (factorial n)
   (define (iter product counter)
     (if (> counter n)
@@ -1502,7 +1502,7 @@ print-result
   (iter 1 1))
 
 
-;;EXERCISE 5.35 (FIGURE 5.18)
+// EXERCISE 5.35 (FIGURE 5.18)
   (assign val (op make-compiled-procedure) (label entry16)
                                            (reg env))
   (goto (label after-lambda15))
@@ -1560,11 +1560,11 @@ after-call23
 after-lambda15
   (perform (op define-variable!) (const f) (reg val) (reg env))
   (assign val (const ok))
-;;end of exercise
+// end of exercise
 
 
 
-;;;SECTION 5.5.6
+// SECTION 5.5.6
 
 (let ((x 3) (y 4))
   (lambda (a b c d e)
@@ -1581,7 +1581,7 @@ after-lambda15
  4)
 
 
-;;EXERCISE 5.41
+// EXERCISE 5.41
 
 (find-variable 'c '((y z) (a b c d e) (x y)))
 
@@ -1591,12 +1591,12 @@ after-lambda15
 
 
 
-;;EXERCISE 5.44
+// EXERCISE 5.44
 (lambda (+ * a b x y)
   (+ (* a x) (* b y)))
 
 
-;;;SECTION 5.5.7
+// SECTION 5.5.7
 
 (compile-and-go
  '(define (factorial n)
@@ -1607,7 +1607,7 @@ after-lambda15
 (factorial 5)
 
 
-;; change to eceval machine
+//  change to eceval machine
 apply-dispatch
   (test (op primitive-procedure?) (reg proc))
   (branch (label primitive-apply))
@@ -1622,7 +1622,7 @@ compiled-apply
   (assign val (op compiled-procedure-entry) (reg proc))
   (goto (reg val))
 
-;; footnote
+//  footnote
 (define (start-eceval)
   (set! the-global-environment (setup-environment))
   (set-register-contents! eceval 'flag false)
@@ -1638,7 +1638,7 @@ compiled-apply
          (display '<compiled-procedure>))
         (else (display object))))
 
-;; end of footnote
+//  end of footnote
 
   (branch (label external-entry))      ; branches if flag is set
 read-eval-print-loop
@@ -1671,20 +1671,20 @@ external-entry
 (factorial 5)
 
 
-;;EXERCISE 5.46
+// EXERCISE 5.46
 (define (fib n)
   (if (< n 2)
       n
       (+ (fib (- n 1)) (fib (- n 2)))))
 
-;;EXERCISE 5.47
+// EXERCISE 5.47
   (assign compapp (label compound-apply))
   (branch (label external-entry))      ; branches if flag is set
 read-eval-print-loop
   ...
 
 
-;;EXERCISE 5.48
+// EXERCISE 5.48
 
 (compile-and-run
  '(define (factorial n)

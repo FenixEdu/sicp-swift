@@ -1,20 +1,20 @@
-;;;;METACIRCULAR EVALUATOR FROM CHAPTER 4 (SECTIONS 4.1.1-4.1.4) of
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// METACIRCULAR EVALUATOR FROM CHAPTER 4 (SECTIONS 4.1.1-4.1.4) of
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch4.scm
+// Matches code in ch4.scm
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;Then you can initialize and start the evaluator by evaluating
-;;;; the two commented-out lines at the end of the file (setting up the
-;;;; global environment and starting the driver loop).
+// This file can be loaded into Scheme as a whole.
+// Then you can initialize and start the evaluator by evaluating
+//  the two commented-out lines at the end of the file (setting up the
+//  global environment and starting the driver loop).
 
-;;;;**WARNING: Don't load this file twice (or you'll lose the primitives
-;;;;  interface, due to renamings of apply).
+// **WARNING: Don't load this file twice (or you'll lose the primitives
+//   interface, due to renamings of apply).
 
-;;;from section 4.1.4 -- must precede def of metacircular apply
+// from section 4.1.4 -- must precede def of metacircular apply
 (define apply-in-underlying-scheme apply)
 
-;;;SECTION 4.1.1
+// SECTION 4.1.1
 
 (define (eval exp env)
   (cond ((self-evaluating? exp) exp)
@@ -79,7 +79,7 @@
                     env)
   'ok)
 
-;;;SECTION 4.1.2
+// SECTION 4.1.2
 
 (define (self-evaluating? exp)
   (cond ((number? exp) true)
@@ -197,7 +197,7 @@
                      (sequence->exp (cond-actions first))
                      (expand-clauses rest))))))
 
-;;;SECTION 4.1.3
+// SECTION 4.1.3
 
 (define (true? x)
   (not (eq? x false)))
@@ -282,7 +282,7 @@
     (scan (frame-variables frame)
           (frame-values frame))))
 
-;;;SECTION 4.1.4
+// SECTION 4.1.4
 
 (define (setup-environment)
   (let ((initial-env
@@ -293,7 +293,7 @@
     (define-variable! 'false false initial-env)
     initial-env))
 
-;[do later] (define the-global-environment (setup-environment))
+// [do later] (define the-global-environment (setup-environment))
 
 (define (primitive-procedure? proc)
   (tagged-list? proc 'primitive))
@@ -305,7 +305,7 @@
         (list 'cdr cdr)
         (list 'cons cons)
         (list 'null? null?)
-;;      more primitives
+//       more primitives
         ))
 
 (define (primitive-procedure-names)
@@ -316,7 +316,7 @@
   (map (lambda (proc) (list 'primitive (cadr proc)))
        primitive-procedures))
 
-;[moved to start of file] (define apply-in-underlying-scheme apply)
+// [moved to start of file] (define apply-in-underlying-scheme apply)
 
 (define (apply-primitive-procedure proc args)
   (apply-in-underlying-scheme
@@ -349,9 +349,9 @@
                      '<procedure-env>))
       (display object)))
 
-;;;Following are commented out so as not to be evaluated when
-;;; the file is loaded.
-;;(define the-global-environment (setup-environment))
-;;(driver-loop)
+// Following are commented out so as not to be evaluated when
+//  the file is loaded.
+// (define the-global-environment (setup-environment))
+// (driver-loop)
 
 'METACIRCULAR-EVALUATOR-LOADED

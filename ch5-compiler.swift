@@ -1,21 +1,21 @@
-;;;;COMPILER FROM SECTION 5.5 OF
-;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
+// COMPILER FROM SECTION 5.5 OF
+//  STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 
-;;;;Matches code in ch5.scm
+// Matches code in ch5.scm
 
-;;;;This file can be loaded into Scheme as a whole.
-;;;;**NOTE**This file loads the metacircular evaluator's syntax procedures
-;;;;  from section 4.1.2
-;;;;  You may need to change the (load ...) expression to work in your
-;;;;  version of Scheme.
+// This file can be loaded into Scheme as a whole.
+// **NOTE**This file loads the metacircular evaluator's syntax procedures
+//   from section 4.1.2
+//   You may need to change the (load ...) expression to work in your
+//   version of Scheme.
 
-;;;;Then you can compile Scheme programs as shown in section 5.5.5
+// Then you can compile Scheme programs as shown in section 5.5.5
 
-;;**implementation-dependent loading of syntax procedures
+// **implementation-dependent loading of syntax procedures
 (load "ch5-syntax.scm")			;section 4.1.2 syntax procedures
 
 
-;;;SECTION 5.5.1
+// SECTION 5.5.1
 
 (define (compile exp target linkage)
   (cond ((self-evaluating? exp)
@@ -47,9 +47,9 @@
   (make-instruction-sequence '() '() '()))
 
 
-;;;SECTION 5.5.2
+// SECTION 5.5.2
 
-;;;linkage code
+// linkage code
 
 (define (compile-linkage linkage)
   (cond ((eq? linkage 'return)
@@ -67,7 +67,7 @@
    (compile-linkage linkage)))
 
 
-;;;simple expressions
+// simple expressions
 
 (define (compile-self-evaluating exp target linkage)
   (end-with-linkage linkage
@@ -116,9 +116,9 @@
          (assign ,target (const ok))))))))
 
 
-;;;conditional expressions
+// conditional expressions
 
-;;;labels (from footnote)
+// labels (from footnote)
 (define label-counter 0)
 
 (define (new-label-number)
@@ -129,7 +129,7 @@
   (string->symbol
     (string-append (symbol->string name)
                    (number->string (new-label-number)))))
-;; end of footnote
+//  end of footnote
 
 (define (compile-if exp target linkage)
   (let ((t-branch (make-label 'true-branch))
@@ -154,7 +154,7 @@
            (append-instruction-sequences f-branch a-code))
           after-if))))))
 
-;;; sequences
+//  sequences
 
 (define (compile-sequence seq target linkage)
   (if (last-exp? seq)
@@ -163,7 +163,7 @@
        (compile (first-exp seq) target 'next)
        (compile-sequence (rest-exps seq) target linkage))))
 
-;;;lambda expressions
+// lambda expressions
 
 (define (compile-lambda exp target linkage)
   (let ((proc-entry (make-label 'entry))
@@ -195,9 +195,9 @@
      (compile-sequence (lambda-body exp) 'val 'return))))
 
 
-;;;SECTION 5.5.3
+// SECTION 5.5.3
 
-;;;combinations
+// combinations
 
 (define (compile-application exp target linkage)
   (let ((proc-code (compile (operator exp) 'proc 'next))
@@ -240,7 +240,7 @@
          code-for-next-arg
          (code-to-get-rest-args (cdr operand-codes))))))
 
-;;;applying procedures
+// applying procedures
 
 (define (compile-procedure-call target linkage)
   (let ((primitive-branch (make-label 'primitive-branch))
@@ -267,7 +267,7 @@
                      (reg argl)))))))
        after-call))))
 
-;;;applying compiled procedures
+// applying compiled procedures
 
 (define (compile-proc-appl target linkage)
   (cond ((and (eq? target 'val) (not (eq? linkage 'return)))
@@ -296,11 +296,11 @@
          (error "return linkage, target not val -- COMPILE"
                 target))))
 
-;; footnote
+//  footnote
 (define all-regs '(env proc val argl continue))
 
 
-;;;SECTION 5.5.4
+// SECTION 5.5.4
 
 (define (registers-needed s)
   (if (symbol? s) '() (car s)))
