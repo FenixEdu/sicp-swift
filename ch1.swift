@@ -16,57 +16,55 @@
 
 // $> 486
 
-// $> (+ 137 349)
-// $> (- 1000 334)
-// $> (* 5 99)
-// $> (/ 10 5)
-// $> (+ 2.7 10)
+// $> 137 + 349
+// $> 1000 - 334
+// $> 5 * 99
+// $> 10 / 5
+// $> 2.7 + 10
 
-// $> (+ 21 35 12 7)
-// $> (* 25 4 12)
+// $> 21 + 35 + 12 + 7
+// $> 25 * 4 * 12
 
-// $> (+ (* 3 5) (- 10 6))
+// $> (3 * 5) + (10 - 6)
 
-// $> (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
+// $> (3 * ((2 * 4) + (3 + 5))) + (10 - 7 + 6)
 
-// $> (+ (* 3
-// $>       (+ (* 2 4)
-// $>          (+ 3 5)))
-// $>    (+ (- 10 7)
-// $>       6))
+// $> (3 * ((2 * 4) + (3 + 5))) + (10 - 7 + 6)
 
 
 // SECTION 1.1.2
 
-// $> (define size 2)
+// $> var size = 2
 // $> size
-// $> (* 5 size)
+// $> 5 * size
 
-// $> (define pi 3.14159)
-// $> (define radius 10)
-// $> (* pi (* radius radius))
-// $> (define circumference (* 2 pi radius))
+// $> var pi = 3.14159
+// $> var radius = 10.0
+// $> pi * (radius * radius)
+// $> var circumference = (2 * pi * radius)
 // $> circumference
 
 
 // SECTION 1.1.3
 
-// $> (* (+ 2 (* 4 6))
-// $>    (+ 3 5 7))
+// $> (2 + (4 * 6)) * (3 + 5 + 7)
 
 
 // SECTION 1.1.4
 
-(define (square x) (* x x))
+func square(x: Int) ->Int{
+    return x * x;
+}
 
-// $> (square 21)
-// $> (square (+ 2 5))
-// $> (square (square 3))
+// $> square(21)
+// $> square(2 + 5)
+// $> square(square(3))
 
-(define (sum-of-squares x y)
-  (+ (square x) (square y)))
+func sumOfSquares(x: Int, y: Int) -> Int{
+  return square(x) + square(x)
+}
 
-// $> (sum-of-squares 3 4)
+// $> sum-of-squares(3,4)
 
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
