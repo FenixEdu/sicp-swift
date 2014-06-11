@@ -14,40 +14,40 @@
 
 //  interpreter examples
 
-// $> 486
+486
 
-// $> 137 + 349
-// $> 1000 - 334
-// $> 5 * 99
-// $> 10 / 5
-// $> 2.7 + 10
+137 + 349
+1000 - 334
+5 * 99
+10 / 5
+2.7 + 10
 
-// $> 21 + 35 + 12 + 7
-// $> 25 * 4 * 12
+21 + 35 + 12 + 7
+25 * 4 * 12
 
-// $> (3 * 5) + (10 - 6)
+(3 * 5) + (10 - 6)
 
-// $> (3 * ((2 * 4) + (3 + 5))) + (10 - 7 + 6)
+(3 * ((2 * 4) + (3 + 5))) + (10 - 7 + 6)
 
-// $> (3 * ((2 * 4) + (3 + 5))) + (10 - 7 + 6)
+(3 * ((2 * 4) + (3 + 5))) + (10 - 7 + 6)
 
 
 // SECTION 1.1.2
 
-// $> var size = 2
-// $> size
-// $> 5 * size
+var size = 2
+size
+5 * size
 
-// $> var pi = 3.14159
-// $> var radius = 10.0
-// $> pi * (radius * radius)
-// $> var circumference = (2 * pi * radius)
-// $> circumference
+var pi = 3.14159
+var radius = 10.0
+pi * (radius * radius)
+var circumference = (2 * pi * radius)
+circumference
 
 
 // SECTION 1.1.3
 
-// $> (2 + (4 * 6)) * (3 + 5 + 7)
+(2 + (4 * 6)) * (3 + 5 + 7)
 
 
 // SECTION 1.1.4
@@ -56,29 +56,31 @@ func square(x: Int) ->Int{
     return x * x;
 }
 
-// $> square(21)
-// $> square(2 + 5)
-// $> square(square(3))
+square(21)
+square(2 + 5)
+square(square(3))
 
 func sumOfSquares(x: Int, y: Int) -> Int{
   return square(x) + square(x)
 }
 
-// $> sum-of-squares(3,4)
+sumOfSquares(3,4)
 
-(define (f a)
-  (sum-of-squares (+ a 1) (* a 2)))
+func f(a:Int) -> Int{
+  sumOfSquares(a + 1, a * 2)
+}
 
-// $> (f 5)
+
+f(5)
 
 
 // SECTION 1.1.5
 
-// $> (f 5)
-// $> (sum-of-squares (+ 5 1) (* 5 2))
-// $> (+ (square 6) (square 10))
-// $> (+ (* 6 6) (* 10 10))
-// $> (+ 36 100)
+f(5)
+sumOfSquares(5 + 1, 5 * 2)
+square(6) + square(10)
+(6 * 6) + (10 * 10)
+36 + 100
 
 // $> (f 5)
 // $> (sum-of-squares (+ 5 1) (* 5 2))
@@ -91,27 +93,42 @@ func sumOfSquares(x: Int, y: Int) -> Int{
 
 // SECTION 1.1.6
 
-(define (abs x)
-  (cond ((> x 0) x)
-        ((= x 0) 0)
-        ((< x 0) (- x))))
+func abs1(x:Int) -> Int {
+    if x > 0 {
+        return x
+    }else if x == 0 {
+        return 0
+    }else{
+        return -x
+    }
+}
 
-(define (abs x)
-  (cond ((< x 0) (- x))
-        (else x)))
+func abs2(x:Int) -> Int{
+    if x < 0 {
+        return -x
+    }else{
+        return x
+    }
+}
 
-(define (abs x)
-  (if (< x 0)
-      (- x)
-      x))
+func abs3(x:Int) -> Int{
+    if x < 0 {
+        return -x
+    }else{
+        return x
+    }
+}
 
-// $> (and (> x 5) (< x 10))
+var x = 7
+x > 5 && x < 10
 
-(define (>= x y)
-  (or (> x y) (= x y)))
+func lessOrEqual1(x:Int, y:Int) -> Bool{
+    return x > y || x == y
+}
 
-(define (>= x y)
-  (not (< x y)))
+func lessOrEqual(x:Int, y:Int) -> Bool{
+    return !(x < y)
+}
 
 
 // EXERCISE 1.1
