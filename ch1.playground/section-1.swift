@@ -61,7 +61,7 @@ square(2 + 5)
 square(square(3))
 
 func sumOfSquares(x: Double, y: Double) -> Double{
-  return square(x) + square(x)
+  return square(x) + square(y)
 }
 
 sumOfSquares(3,4)
